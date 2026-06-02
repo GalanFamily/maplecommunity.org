@@ -311,6 +311,46 @@ function WhatIsCommunity() {
             …and a hundred more.
           </div>
         </div>
+
+        {/* Local infrastructure reflection — Fauci quote (dark feature card) */}
+        <div className="reveal mt-16 rounded-[32px] overflow-hidden grain" style={{ background: "linear-gradient(155deg, #3a2418 0%, var(--ink) 100%)", border: "1px solid rgba(255,255,255,0.13)", color: "#fff" }}>
+          <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
+            {/* Left rail */}
+            <div className="p-9 md:p-11 flex flex-col justify-between" style={{ background: "rgba(0,0,0,0.22)", borderRight: "1px solid rgba(255,255,255,0.08)" }}>
+              <div className="text-[10px] font-bold uppercase tracking-[0.24em]" style={{ color: "var(--amber-soft)" }}>What we lost along the way</div>
+              <div>
+                <div className="font-serif italic leading-[1.05] mt-8" style={{ fontSize: "clamp(28px, 3.6vw, 44px)", color: "#fff" }}>
+                  the corner that did <span style={{ color: "var(--amber-soft)" }}>double duty.</span>
+                </div>
+                <p className="mt-5 text-[15px] leading-relaxed text-stone-300 font-medium">
+                  A service on the surface, a relationship underneath. We didn't just lose neighbors — we lost the <strong style={{ color: "#fff" }}>local infrastructure of connection.</strong> As those institutions thinned out or scaled up, the relationships went with them. Rebuilding that infrastructure is the work.
+                </p>
+              </div>
+            </div>
+
+            {/* Quote */}
+            <div className="p-9 md:p-12 relative">
+              <div className="font-serif leading-none select-none" style={{ fontSize: "120px", color: "var(--amber-soft)", opacity: 0.18, height: "0.5em", marginTop: "-0.1em" }}>“</div>
+              <blockquote>
+                <p className="font-serif leading-[1.32]" style={{ fontSize: "clamp(18px, 1.75vw, 24px)" }}>
+                  My father was a pharmacist in a small pharmacy that he owned… At that time the neighborhood pharmacy was sort of like <span className="italic" style={{ color: "var(--amber-soft)" }}>the hub of the neighborhood.</span> And, unlike the chain pharmacies of CVS and Walgreens of today, it was kind of <span style={{ color: "#fff", fontWeight: 600 }}>the doc of the neighborhood.</span> …And that's really one of the reasons I wanted to become a physician.
+                </p>
+                <footer className="mt-7">
+                  <div className="flex items-center gap-3 text-[15px] font-bold uppercase tracking-[0.18em] text-white">
+                    <span className="w-8 h-px" style={{ background: "var(--amber-soft)" }}></span>
+                    Dr. Anthony Fauci
+                  </div>
+                  <div className="text-[11px] font-bold uppercase tracking-[0.16em] mt-2 ml-11" style={{ color: "var(--amber-soft)" }}>
+                    Director, NIAID 1984–2022 · Chief Medical Advisor to the President
+                  </div>
+                  <div className="text-[11px] leading-relaxed text-stone-500 mt-3 max-w-md">
+                    Lederman MM, Greenspan NS. <span className="italic">Dr. Anthony Fauci Shares Insights on His Career and Leadership of the NIAID.</span> Pathog Immun. 2024;9(2):152–171.
+                  </div>
+                </footer>
+              </blockquote>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -534,43 +574,6 @@ function TheCase() {
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Local infrastructure reflection — Fauci quote */}
-        <div className="reveal mb-20 rounded-[32px] overflow-hidden grain" style={{ background: "linear-gradient(155deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 100%)", border: "1px solid rgba(255,255,255,0.13)" }}>
-          <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
-            {/* Left rail */}
-            <div className="p-9 md:p-11 flex flex-col justify-between" style={{ background: "rgba(0,0,0,0.18)", borderRight: "1px solid rgba(255,255,255,0.08)" }}>
-              <div className="text-[10px] font-bold uppercase tracking-[0.24em]" style={{ color: "var(--amber-soft)" }}>What we lost along the way</div>
-              <div>
-                <div className="font-serif italic leading-[1.05] mt-8" style={{ fontSize: "clamp(28px, 3.6vw, 44px)" }}>
-                  the corner that did <span style={{ color: "var(--amber-soft)" }}>double duty.</span>
-                </div>
-                <p className="mt-5 text-[15px] leading-relaxed text-stone-300 font-medium">
-                  A service on the surface, a relationship underneath. We didn't just lose neighbors — we lost the <strong style={{ color: "#fff" }}>local infrastructure of connection.</strong> As those institutions thinned out or scaled up, the relationships went with them. Rebuilding that infrastructure is the work.
-                </p>
-              </div>
-            </div>
-
-            {/* Quote */}
-            <div className="p-9 md:p-12 relative">
-              <div className="font-serif leading-none select-none" style={{ fontSize: "120px", color: "var(--amber-soft)", opacity: 0.18, height: "0.5em", marginTop: "-0.1em" }}>“</div>
-              <blockquote>
-                <p className="font-serif leading-[1.32]" style={{ fontSize: "clamp(18px, 1.75vw, 24px)" }}>
-                  My father was a pharmacist in a small pharmacy that he owned… At that time the neighborhood pharmacy was sort of like <span className="italic" style={{ color: "var(--amber-soft)" }}>the hub of the neighborhood.</span> And, unlike the chain pharmacies of CVS and Walgreens of today, it was kind of <span style={{ color: "#fff", fontWeight: 600 }}>the doc of the neighborhood.</span> …And that's really one of the reasons I wanted to become a physician.
-                </p>
-                <footer className="mt-7">
-                  <div className="flex items-center gap-3 text-[13px] font-bold uppercase tracking-[0.18em] text-stone-200">
-                    <span className="w-8 h-px" style={{ background: "var(--amber-soft)" }}></span>
-                    Dr. Anthony Fauci
-                  </div>
-                  <div className="text-[11px] leading-relaxed text-stone-500 mt-3 max-w-md">
-                    Lederman MM, Greenspan NS. <span className="italic">Dr. Anthony Fauci Shares Insights on His Career and Leadership of the NIAID.</span> Pathog Immun. 2024;9(2):152–171.
-                  </div>
-                </footer>
-              </blockquote>
-            </div>
-          </div>
         </div>
 
         {/* Beat 2 — it makes us sick */}
