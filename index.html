@@ -1786,6 +1786,38 @@ function TheStudy() {
           ))}
         </div>
 
+        {/* Webinars */}
+        <div className="reveal mt-14">
+          <div className="flex items-center gap-3 mb-5">
+            <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--amber-soft)" }}>Free webinars</span>
+            <span className="h-px flex-1" style={{ background: "rgba(255,255,255,0.15)" }}></span>
+          </div>
+          <p className="text-stone-300 text-[15px] leading-relaxed max-w-2xl mb-6">
+            Live, 45-minute sessions — open to anyone curious about community care. Join on Zoom; no registration required.
+          </p>
+          <div className="rounded-3xl overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.12)" }}>
+            {[
+              { title: "Community & Medicine", day: "Mondays", time: "11:00 AM" },
+              { title: "Insurance Companies Funding Healthy Communities", day: "Tuesdays", time: "3:00 PM" },
+              { title: "ECM, CYBHI & Community Supports", day: "Wednesdays", time: "11:00 AM" },
+              { title: "Start a Flamingo Friday", day: "Thursdays", time: "3:00 PM" },
+              { title: "Healthy Families: the role of work in the family", day: "Fridays", time: "11:00 AM" },
+            ].map((w, i) => (
+              <div key={i} className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 p-5 sm:px-7" style={{ borderTop: i ? "1px solid rgba(255,255,255,0.08)" : "none", background: "rgba(255,255,255,0.04)" }}>
+                <div className="sm:w-44 shrink-0">
+                  <div className="font-serif font-bold text-[17px]" style={{ color: "#fff" }}>{w.day}</div>
+                  <div className="text-[11px] font-bold uppercase tracking-[0.16em]" style={{ color: "var(--amber-soft)" }}>{w.time} · 45 min</div>
+                </div>
+                <div className="font-serif italic text-[18px] leading-snug flex-1" style={{ color: "#fff" }}>{w.title}</div>
+                <a href="https://us04web.zoom.us/j/8058901934?pwd=e9FDtF07mjSGxbgrMxxcvvapowxUHx.1" target="_blank" rel="noopener" className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm text-white self-start sm:self-auto" style={{ background: "var(--maple)" }}>
+                  Join on Zoom
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* OPEN DECISION (pending Megan's IRB / research-design work): do NOT add outcome numbers or claim a longitudinal study with measured results until confirmed. */}
         <p className="reveal mt-8 text-[13px] text-stone-400 italic max-w-2xl font-serif">
           We'd rather share a small, true picture than an impressive false one. Any future outcome figures will come from real, carefully designed evaluation.
