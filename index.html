@@ -242,7 +242,7 @@ function Hero() {
         <div className="flex marquee-track gap-10 whitespace-nowrap font-serif italic lowercase text-stone-400" style={{ fontSize: "clamp(28px, 4vw, 56px)" }}>
           {Array.from({length: 2}).map((_, k) => (
             <div key={k} className="flex gap-10 shrink-0">
-              {["families", "neighbors", "schools", "community-based organizations", "justice partners", "clinics", "faith communities", "service clubs", "county agencies", "churches", "case workers", "community health workers", "the corner store", "the front porch"].map((w, i) => (
+              {["families", "neighbors", "schools", "community-based organizations", "clinics", "service clubs", "county agencies", "justice partners", "churches", "case workers", "community health workers", "the corner store"].map((w, i) => (
                 <span key={i} className="inline-flex items-center gap-10">
                   {w}
                   <span className="text-[var(--maple)]" style={{ fontStyle: "normal" }}>·</span>
