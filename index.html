@@ -1374,7 +1374,27 @@ function Partners() {
 
 /* ---------- Transitions to the Community ---------- */
 function Transitions() {
-  const [held, setHeld] = useState(true);
+  // CareHub-style journey constellation. A person bounces among community nodes above
+  // the line; falling through the cracks drops them below it to the ED, hospital, and jail.
+  const COMM   = { label: "Community", x: 500, y: 180 };
+  const FAMILY = { label: "Family",        x: 300, y: 92,  tone: "#A8341A" };
+  const NEIGH  = { label: "Neighbors",     x: 500, y: 70,  tone: "#D97706" };
+  const FAITH  = { label: "Faith",         x: 700, y: 92,  tone: "#C2410C" };
+  const CLINIC = { label: "Clinic",        x: 812, y: 222, tone: "#4A6741" };
+  const CLUB   = { label: "Service club",  x: 650, y: 322, tone: "#D14B6A" };
+  const MUTUAL = { label: "Mutual aid",    x: 350, y: 322, tone: "#A8341A" };
+  const NABE   = { label: "Neighborhood",  x: 188, y: 222, tone: "#D97706" };
+  const community = [FAMILY, NEIGH, FAITH, CLINIC, CLUB, MUTUAL, NABE];
+  const ED   = { label: "Emergency Dept", lines: ["Emergency", "Dept."], x: 270, y: 472, tone: "#6B1F0E" };
+  const HOSP = { label: "Hospital",       x: 500, y: 492, tone: "#6B1F0E" };
+  const JAIL = { label: "Jail",           x: 730, y: 472, tone: "#2B1810" };
+  const cracks = [ED, HOSP, JAIL];
+  const sequence = [
+    COMM, FAMILY, COMM, NEIGH, COMM, FAITH, CLINIC, ED, HOSP, COMM,
+    CLUB, COMM, NABE, COMM, MUTUAL, JAIL, COMM, NEIGH, FAITH, ED,
+    COMM, FAMILY, COMM, CLINIC, COMM, CLUB, HOSP, COMM, NABE, COMM
+  ];
+  const motionPath = sequence.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ");
   const principles = [
     {
       n: "01",
@@ -1447,53 +1467,55 @@ function Transitions() {
           </p>
         </div>
 
-        {/* Interactive — the web keeps the person above the line */}
-        <div className="reveal rounded-[32px] border border-stone-200 bg-white p-6 md:p-8 mb-12 grain">
-          <div className="relative">
-            <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-              <span className="font-serif italic text-center px-6" style={{ fontSize: "clamp(20px, 4vw, 40px)", color: "var(--maple)", opacity: 0.07 }}>every touch point is a warm handoff</span>
-            </div>
-            <svg viewBox="0 0 600 320" className="w-full h-auto relative" role="img" aria-label="A web of community support holding a person above the line that leads to the ER, the hospital, and jail.">
-              {/* supporters + their strands to the held dot at (300,150) */}
-              {[
-                { x: 70,  y: 72, label: "Family" },
-                { x: 190, y: 48, label: "Neighbor" },
-                { x: 300, y: 60, label: "Clinic" },
-                { x: 410, y: 48, label: "Faith" },
-                { x: 530, y: 72, label: "Coach" },
-              ].map((s, i) => (
-                <g key={i} style={{ opacity: held ? 1 : 0.3, transition: "opacity .6s" }}>
-                  <line x1={s.x} y1={s.y} x2="300" y2="150" stroke="#A8341A" strokeWidth="1.6" strokeOpacity={held ? 0.5 : 0} style={{ transition: "stroke-opacity .5s" }}/>
-                  <circle cx={s.x} cy={s.y} r="20" fill="#F4C99F"/>
-                  <text x={s.x} y={s.y + 3} textAnchor="middle" fontFamily="Inter" fontSize="8" fontWeight="800" letterSpacing="1" fill="#6B1F0E">{s.label.toUpperCase()}</text>
+        {/* Interactive — CareHub-style journey: bouncing between community above the line,
+            falling through the cracks to the ED, hospital, and jail below it. */}
+        <div className="reveal rounded-[32px] border border-stone-200 bg-white p-5 md:p-8 mb-12 grain">
+          <div className="-mx-2 md:mx-0 overflow-x-auto md:overflow-visible">
+            <svg viewBox="0 0 1000 540" className="block mx-auto h-auto" style={{ minWidth: 720, width: "100%" }} role="img" aria-label="A person bounces between community supports above the line; when they fall through the cracks they drop below it to the emergency department, hospital, and jail, then community brings them back up.">
+              {/* the line / threshold */}
+              <line x1="40" y1="378" x2="960" y2="378" stroke="#2B1810" strokeOpacity="0.28" strokeWidth="2" strokeDasharray="7 7"/>
+              <rect x="40" y="380" width="920" height="142" rx="14" fill="#2B1810" opacity="0.05"/>
+              <text x="52" y="370" fontFamily="Inter" fontSize="11" fontWeight="800" letterSpacing="2" fill="#2B1810" opacity="0.4">ABOVE THE LINE — HELD IN COMMUNITY</text>
+              <text x="52" y="404" fontFamily="Inter" fontSize="11" fontWeight="800" letterSpacing="2" fill="#6B1F0E" opacity="0.6">THROUGH THE CRACKS — ED · HOSPITAL · JAIL</text>
+
+              {/* Community hub */}
+              <g transform={`translate(${COMM.x} ${COMM.y})`}>
+                <text textAnchor="middle" y="-44" fontFamily="Inter" fontSize="10" fontWeight="800" letterSpacing="3" fill="#A8341A">THE HUB</text>
+                <text textAnchor="middle" y="10" fontFamily="Fraunces, serif" fontWeight="700" fontSize="40" fill="#2B1810">Community</text>
+              </g>
+
+              {/* community satellites (above the line) */}
+              {community.map((p) => (
+                <g key={p.label} transform={`translate(${p.x} ${p.y})`}>
+                  <circle r="30" fill="#fff" stroke={p.tone} strokeWidth="2.25"/>
+                  <circle r="7" fill={p.tone}/>
+                  <text textAnchor="middle" y="50" fontFamily="Fraunces, serif" fontWeight="600" fontSize="17" fill="#2B1810">{p.label}</text>
                 </g>
               ))}
 
-              {/* the line / threshold + the place below it */}
-              <line x1="20" y1="230" x2="580" y2="230" stroke="#2B1810" strokeOpacity="0.3" strokeWidth="2" strokeDasharray="6 6"/>
-              <rect x="20" y="232" width="560" height="78" rx="10" fill="#2B1810" opacity="0.06"/>
-              <text x="300" y="280" textAnchor="middle" fontFamily="Inter" fontSize="11" fontWeight="800" letterSpacing="3" fill="#2B1810" opacity="0.5">BELOW THE LINE: ER · HOSPITAL · JAIL</text>
-
-              {/* the person — held above the line, or fallen below */}
-              <g style={{ transform: held ? "translateY(0px)" : "translateY(125px)", transition: "transform .9s cubic-bezier(.5,0,.3,1)" }}>
-                <g className="bob">
-                  <circle cx="300" cy="150" r={held ? 40 : 22} fill="#A8341A" fillOpacity="0.12" style={{ transition: "r .6s" }}/>
-                  <circle cx="300" cy="150" r="13" fill="#A8341A"/>
+              {/* failure nodes (below the line) */}
+              {cracks.map((p) => (
+                <g key={p.label} transform={`translate(${p.x} ${p.y})`}>
+                  <circle r="30" fill="#2B1810" stroke={p.tone} strokeWidth="2.25"/>
+                  <circle r="7" fill="#F4C99F" fillOpacity="0.7"/>
+                  <text textAnchor="middle" fontFamily="Fraunces, serif" fontWeight="600" fontSize="15" fill="#6B1F0E">
+                    {(p.lines || [p.label]).map((ln, i) => (<tspan key={i} x="0" y={52 + i * 18}>{ln}</tspan>))}
+                  </text>
                 </g>
-              </g>
+              ))}
+
+              {/* the bouncing person — halo + dot following the same path, rendered last */}
+              <circle cx="0" cy="0" r="18" fill="#A8341A" fillOpacity="0.25">
+                <animateMotion dur="26s" repeatCount="indefinite" path={motionPath}/>
+              </circle>
+              <circle cx="0" cy="0" r="10" fill="#6B1F0E" stroke="#fff" strokeWidth="2">
+                <animateMotion dur="26s" repeatCount="indefinite" path={motionPath}/>
+              </circle>
             </svg>
           </div>
-
-          <div className="flex flex-wrap items-center justify-between gap-4 mt-4">
-            <p className="text-stone-600 text-[14px] max-w-md leading-relaxed">
-              {held
-                ? "One person can't catch a fall. A web can — the warm handoffs are the strands."
-                : "Without the web, the threshold leads straight to the ER, the hospital, or jail."}
-            </p>
-            <button type="button" onClick={() => setHeld(v => !v)} className="px-5 py-2.5 rounded-full font-semibold text-sm border transition" style={{ borderColor: "var(--maple-deep)", color: held ? "var(--maple-deep)" : "#fff", background: held ? "transparent" : "var(--maple-deep)" }}>
-              {held ? "Take away the web →" : "← Bring the community back"}
-            </button>
-          </div>
+          <p className="text-stone-600 text-[14px] leading-relaxed mt-4 max-w-2xl">
+            Watch one person move. Held in community, they bounce between the people around them. Lose that web and they fall through the cracks — into the ED, the hospital, or jail. <strong style={{ color: "var(--ink)" }}>Warm handoffs are what keep them above the line.</strong>
+          </p>
         </div>
 
         {/* Four principles */}
@@ -1533,219 +1555,58 @@ function Transitions() {
 
 /* ---------- The work: projects + events ---------- */
 function TheWork() {
+  const projects = [
+    {
+      name: "CareHub",
+      kind: "The medical engine",
+      desc: "The infrastructure that lets community organizations and county agencies actually receive Medi-Cal funding.",
+      href: "https://carehub.org",
+      host: "carehub.org",
+      tone: "var(--maple-deep)",
+    },
+    {
+      name: "Flamingo Friday",
+      kind: "Event series",
+      desc: "A small, joyful weekly ritual that turns neighbors into regulars — and regulars into family.",
+      href: "https://flamingofriday.com",
+      host: "flamingofriday.com",
+      tone: "var(--pink)",
+    },
+    {
+      name: "Working Family",
+      kind: "Family support",
+      desc: "Tools and support for the families holding everything together.",
+      href: "https://workingfamily.org",
+      host: "workingfamily.org",
+      tone: "var(--moss)",
+    },
+  ];
   return (
     <section id="work" className="py-24 px-6 relative">
       <div className="max-w-6xl mx-auto">
-        <div className="reveal mb-14 max-w-3xl">
+        <div className="reveal mb-10 max-w-3xl">
           <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--maple)" }}>Projects</span>
-          <h2 className="font-serif font-bold lowercase mt-5 leading-[0.95] tracking-tight" style={{ color: "var(--ink)", fontSize: "clamp(40px, 6vw, 76px)" }}>
+          <h2 className="font-serif font-bold lowercase mt-5 leading-[0.95] tracking-tight" style={{ color: "var(--ink)", fontSize: "clamp(34px, 5vw, 60px)" }}>
             projects under <span className="italic" style={{ color: "var(--maple)" }}>our roof.</span>
           </h2>
-          <p className="mt-6 text-stone-700 leading-relaxed font-medium text-lg">
-            Maple is the warm umbrella. Some projects we host ourselves; one — CareHub — is the medical engine that makes the funding work.
+          <p className="mt-5 text-stone-700 leading-relaxed font-medium">
+            A few things we host or help run. CareHub is the medical engine; the rest are simple ways we bring people together.
           </p>
         </div>
 
-        {/* Featured: CareHub */}
-        <div className="reveal grid lg:grid-cols-[1.1fr_1fr] gap-0 rounded-[32px] overflow-hidden border border-stone-200 bg-white lift mb-6">
-          <div className="p-10 md:p-14 relative">
-            <div className="flex items-center gap-3 mb-6">
-              <span className="text-[10px] font-black uppercase tracking-[0.24em] px-3 py-1.5 rounded-full" style={{ background: "var(--cream)", color: "var(--maple-deep)" }}>Project 01 · Live</span>
-              <span className="w-1.5 h-1.5 rounded-full pulse-dot" style={{ background: "var(--moss)" }}></span>
-              <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-stone-500">Healthcare · California</span>
-            </div>
-            <h3 className="font-serif font-bold lowercase leading-[0.95] mb-5" style={{ color: "var(--ink)", fontSize: "clamp(40px, 5vw, 64px)" }}>
-              carehub.
-            </h3>
-            <p className="text-stone-700 leading-relaxed text-lg mb-6 font-medium">
-              CareHub is Maple's medical engine — the infrastructure that lets community organizations and county agencies <em>actually receive</em> Medi-Cal funding.
-            </p>
-            <p className="text-stone-600 leading-relaxed text-[15px] mb-8">
-              It's a separate, more clinical project with its own home. The deep details — how a Community Care Hub works, the policy, the care model — live there.
-            </p>
-            <div className="flex flex-wrap gap-2 mb-8">
-              {["Medi-Cal infrastructure", "CBO support", "County partnerships", "Care coordination"].map((t, i) => (
-                <span key={i} className="text-[11px] font-semibold px-3 py-1.5 rounded-full border border-stone-200 text-stone-700 bg-white">{t}</span>
-              ))}
-            </div>
-            <a href="https://carehub.org" target="_blank" rel="noopener" className="inline-flex items-center gap-2 text-sm font-semibold underline-grow" style={{ color: "var(--maple-deep)" }}>
-              carehub.org
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
-            </a>
-          </div>
-
-          <div className="relative min-h-[420px] grain" style={{ background: "linear-gradient(160deg, #2B1810 0%, #6B1F0E 60%, #A8341A 100%)" }}>
-            <div className="absolute inset-0 flex items-center justify-center p-12">
-              <svg viewBox="0 0 400 400" className="w-full h-full max-w-md" fill="none">
-                <g stroke="rgba(244,201,159,0.35)" strokeWidth="1.2">
-                  <line x1="200" y1="200" x2="80" y2="120"/>
-                  <line x1="200" y1="200" x2="320" y2="120"/>
-                  <line x1="200" y1="200" x2="60" y2="240"/>
-                  <line x1="200" y1="200" x2="340" y2="240"/>
-                  <line x1="200" y1="200" x2="120" y2="340"/>
-                  <line x1="200" y1="200" x2="280" y2="340"/>
-                  <line x1="80" y1="120" x2="60" y2="240"/>
-                  <line x1="320" y1="120" x2="340" y2="240"/>
-                  <line x1="60" y1="240" x2="120" y2="340"/>
-                  <line x1="340" y1="240" x2="280" y2="340"/>
-                </g>
-                <circle cx="200" cy="200" r="46" fill="#F4C99F"/>
-                <circle cx="200" cy="200" r="46" fill="none" stroke="#FFF" strokeWidth="1" opacity=".6"/>
-                <text x="200" y="195" textAnchor="middle" fontFamily="Fraunces, serif" fontStyle="italic" fontWeight="700" fontSize="18" fill="#6B1F0E">CareHub</text>
-                <text x="200" y="212" textAnchor="middle" fontFamily="Inter" fontSize="9" fontWeight="700" letterSpacing="2" fill="#6B1F0E">INFRASTRUCTURE</text>
-                {[
-                  { x: 80, y: 120, label: "CBO", color: "#F4C99F" },
-                  { x: 320, y: 120, label: "County", color: "#F8E9D0" },
-                  { x: 60, y: 240, label: "Clinic", color: "#F4C99F" },
-                  { x: 340, y: 240, label: "Provider", color: "#F8E9D0" },
-                  { x: 120, y: 340, label: "Family", color: "#F4C99F" },
-                  { x: 280, y: 340, label: "Member", color: "#F8E9D0" },
-                ].map((n, i) => (
-                  <g key={i}>
-                    <circle cx={n.x} cy={n.y} r="24" fill={n.color}/>
-                    <text x={n.x} y={n.y+4} textAnchor="middle" fontFamily="Inter" fontSize="9" fontWeight="800" letterSpacing="1.5" fill="#6B1F0E">{n.label.toUpperCase()}</text>
-                  </g>
-                ))}
-              </svg>
-            </div>
-          </div>
-        </div>
-
-        {/* Sibling projects */}
-        <div className="grid md:grid-cols-2 gap-6 mb-16">
-          {[
-            {
-              num: "02",
-              kind: "Event series",
-              title: "flamingo friday",
-              tag: "Live",
-              dot: "var(--maple)",
-              accent: "linear-gradient(160deg, #F4ECE0 0%, #F8D5C2 55%, #E89AA8 100%)",
-              shapeColor: "#D14B6A",
-              shapeColor2: "#F4C99F",
-              desc: "A small, joyful weekly ritual that turns neighbors into regulars and regulars into family.",
-              tags: ["Ritual", "Gathering", "Weekly"],
-              href: "https://flamingofriday.com",
-              host: "flamingofriday.com",
-              shape: "flamingo",
-            },
-            {
-              num: "03",
-              kind: "Family support",
-              title: "working family",
-              tag: "Live",
-              dot: "var(--moss)",
-              accent: "linear-gradient(160deg, #F4ECE0 0%, #E9D9BD 55%, #C9B48A 100%)",
-              shapeColor: "#4A6741",
-              shapeColor2: "#A8341A",
-              desc: "Tools and support for the families holding everything together — the ones who keep the lights on.",
-              tags: ["Families", "Support", "Care"],
-              href: "https://workingfamily.org",
-              host: "workingfamily.org",
-              shape: "family",
-            },
-          ].map((p, i) => (
-            <div key={i} className="reveal rounded-3xl overflow-hidden border border-stone-200 bg-white lift flex flex-col">
-              <div className="relative h-44 grain" style={{ background: p.accent }}>
-                <svg viewBox="0 0 400 180" className="absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-                  {p.shape === "flamingo" && (
-                    <g>
-                      <circle cx="320" cy="55" r="34" fill="#FAF6F0" opacity=".7"/>
-                      <path d="M0 150 Q100 144 200 150 T400 150" stroke="#A8341A" strokeWidth="1" opacity=".2" fill="none"/>
-                      <path d="M0 160 Q100 154 200 160 T400 160" stroke="#A8341A" strokeWidth="1" opacity=".15" fill="none"/>
-                      <g transform="translate(70 30)">
-                        <ellipse cx="60" cy="70" rx="44" ry="22" fill={p.shapeColor}/>
-                        <path d="M88 56 Q108 30 96 10 Q90 -2 80 4" stroke={p.shapeColor} strokeWidth="13" strokeLinecap="round" fill="none"/>
-                        <circle cx="80" cy="6" r="9" fill={p.shapeColor}/>
-                        <path d="M72 7 L60 12 L72 13 Z" fill="#2B1810"/>
-                        <circle cx="78" cy="4" r="1.3" fill="#2B1810"/>
-                        <path d="M52 90 L52 124" stroke={p.shapeColor} strokeWidth="3.5" strokeLinecap="round"/>
-                        <path d="M68 90 L68 110 L74 120" stroke={p.shapeColor} strokeWidth="3.5" strokeLinecap="round" fill="none"/>
-                        <path d="M16 64 Q4 58 0 70 Q8 68 16 72 Z" fill={p.shapeColor}/>
-                      </g>
-                    </g>
-                  )}
-                  {p.shape === "family" && (
-                    <g>
-                      <circle cx="80" cy="50" r="28" fill="#FAF6F0" opacity=".6"/>
-                      <g transform="translate(200 95)">
-                        <path d="M-120 30 Q0 -80 120 30" stroke={p.shapeColor} strokeWidth="3" fill="none" opacity=".5"/>
-                        {[
-                          { x: -50, h: 36, color: p.shapeColor },
-                          { x: 0, h: 44, color: p.shapeColor2 },
-                          { x: 50, h: 36, color: p.shapeColor },
-                        ].map((f, j) => (
-                          <g key={j} transform={`translate(${f.x} 0)`}>
-                            <circle cx="0" cy={-f.h - 12} r="9" fill={f.color}/>
-                            <path d={`M -14 30 L -14 ${-f.h} Q 0 ${-f.h - 6} 14 ${-f.h} L 14 30 Z`} fill={f.color}/>
-                          </g>
-                        ))}
-                        <line x1="-90" y1="30" x2="90" y2="30" stroke="#2B1810" strokeWidth="1.2" opacity=".25"/>
-                      </g>
-                    </g>
-                  )}
-                </svg>
-              </div>
-
-              <div className="p-8 flex-1 flex flex-col">
-                <div className="flex items-center gap-3 mb-5 flex-wrap">
-                  <span className="text-[10px] font-black uppercase tracking-[0.24em] px-3 py-1.5 rounded-full" style={{ background: "var(--cream)", color: "var(--maple-deep)" }}>Project {p.num} · {p.tag}</span>
-                  <span className="w-1.5 h-1.5 rounded-full pulse-dot" style={{ background: p.dot }}></span>
-                  <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-stone-500">{p.kind}</span>
-                </div>
-                <h3 className="font-serif font-bold lowercase text-4xl mb-3 leading-none" style={{ color: "var(--ink)" }}>{p.title}.</h3>
-                <p className="text-stone-600 text-[15px] leading-relaxed mb-6">{p.desc}</p>
-
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {p.tags.map((t, j) => (
-                    <span key={j} className="text-[11px] font-semibold px-3 py-1.5 rounded-full border border-stone-200 text-stone-700 bg-white">{t}</span>
-                  ))}
-                </div>
-
-                <a href={p.href} target="_blank" rel="noopener" className="mt-auto inline-flex items-center gap-2 text-sm font-semibold underline-grow self-start" style={{ color: "var(--maple-deep)" }}>
-                  {p.host}
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
-                </a>
-              </div>
+        <div className="grid sm:grid-cols-3 gap-5">
+          {projects.map((p, i) => (
+            <div key={i} className="reveal rounded-3xl border border-stone-200 bg-white p-7 lift flex flex-col" style={{ transitionDelay: `${i * 50}ms` }}>
+              <span className="w-2.5 h-2.5 rounded-full" style={{ background: p.tone }}></span>
+              <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-stone-500 mt-4">{p.kind}</div>
+              <h3 className="font-serif font-bold lowercase text-3xl leading-none mt-2" style={{ color: "var(--ink)" }}>{p.name.toLowerCase()}.</h3>
+              <p className="text-stone-600 text-[14.5px] leading-relaxed mt-3 flex-1">{p.desc}</p>
+              <a href={p.href} target="_blank" rel="noopener" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold underline-grow self-start" style={{ color: "var(--maple-deep)" }}>
+                {p.host}
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+              </a>
             </div>
           ))}
-        </div>
-
-        {/* Events strip */}
-        <div className="reveal">
-          <div className="flex items-center gap-3 mb-6">
-            <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--maple)" }}>Events we host</span>
-            <span className="h-px flex-1 bg-stone-200"></span>
-          </div>
-          <div className="grid md:grid-cols-2 gap-4">
-            {[
-              {
-                title: "Community Dinner",
-                desc: "A long table, a hot meal, and a chair for whoever shows up. The simplest, most under-rated form of medicine we know.",
-                meta: "Recurring · By invitation & by walk-in",
-                color: "var(--maple)",
-                icon: "🍽",
-              },
-              {
-                title: "Flamingo Friday",
-                desc: "A small, joyful, weekly ritual that gives a neighborhood something to look forward to — and a reason to show up.",
-                meta: "Weekly · flamingofriday.com",
-                color: "var(--pink)",
-                icon: "🦩",
-              },
-            ].map((e, i) => (
-              <div key={i} className="rounded-2xl border border-stone-200 bg-white p-7 lift flex gap-5 items-start">
-                <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl shrink-0" style={{ background: "var(--cream)" }}>
-                  <span aria-hidden="true">{e.icon}</span>
-                </div>
-                <div>
-                  <div className="font-serif font-bold lowercase text-2xl leading-tight" style={{ color: "var(--ink)" }}>{e.title.toLowerCase()}.</div>
-                  <p className="text-stone-600 text-[14px] leading-relaxed mt-2">{e.desc}</p>
-                  <div className="text-[10px] font-bold uppercase tracking-[0.22em] mt-4" style={{ color: e.color }}>{e.meta}</div>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
 
         {/* OPEN DECISION (ship now or later): a "For ___" audience structure — For managed-care plans · For community centers · For schools · For justice/probation offices — each describing how Maple helps that community. Not shipped yet, pending family decision. */}
