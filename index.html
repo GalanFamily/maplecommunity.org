@@ -547,14 +547,6 @@ function TheCase() {
           </p>
         </div>
 
-        {/* Short summary: the flow + an optional dive into the data */}
-        <div className="reveal flex items-center justify-center gap-4 flex-wrap text-[15px] md:text-[18px] font-bold uppercase tracking-[0.16em] mb-10">
-          <span className="px-5 py-3 rounded-full" style={{ background: "rgba(255,255,255,0.08)" }}>Isolation</span>
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--amber-soft)" strokeWidth="2" strokeLinecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-          <span className="px-5 py-3 rounded-full" style={{ background: "rgba(255,255,255,0.08)" }}>Crisis</span>
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--amber-soft)" strokeWidth="2" strokeLinecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-          <span className="px-5 py-3 rounded-full" style={{ background: "var(--maple)" }}>ER · hospital · jail</span>
-        </div>
 
         <div className="reveal flex justify-center">
           <button type="button" onClick={() => setShowData(v => !v)} className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm border transition" style={{ borderColor: "rgba(244,201,159,0.45)", color: "var(--amber-soft)", background: showData ? "rgba(244,201,159,0.08)" : "transparent" }}>
