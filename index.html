@@ -195,7 +195,6 @@ function Nav() {
           <a href="#thesis" className="hover:opacity-70">Thesis</a>
           <a href="#case" className="hover:opacity-70">The problem</a>
           <a href="#community" className="hover:opacity-70">Community</a>
-          <a href="#how" className="hover:opacity-70">How it works</a>
           <a href="#work" className="hover:opacity-70">Projects</a>
           <a href="#transitions" className="hover:opacity-70">Transitions</a>
           <a href="#study" className="hover:opacity-70">Research</a>
@@ -323,25 +322,6 @@ function WhatIsCommunity() {
           </p>
         </div>
 
-        {/* How we do the work */}
-        <div className="reveal mt-16 rounded-[32px] p-9 md:p-12 grain" style={{ background: "var(--ink)", color: "#fff" }}>
-          <span className="text-[10px] font-bold uppercase tracking-[0.24em]" style={{ color: "var(--amber-soft)" }}>How we do the work</span>
-          <h3 className="font-serif font-bold lowercase mt-5 leading-[1.02] tracking-tight max-w-3xl" style={{ fontSize: "clamp(28px, 4vw, 48px)" }}>
-            we don't replace community. we <span className="italic" style={{ color: "var(--amber-soft)" }}>fund the people already doing it.</span>
-          </h3>
-          <div className="grid md:grid-cols-3 gap-8 mt-10">
-            {[
-              { n: "Find the hubs", d: "We find the people and organizations already holding their neighborhood together — the hubs of the neighborhood." },
-              { n: "Fund & support them", d: "We move resources and support to them, so they can do more of what already works — instead of building something new on top." },
-              { n: "Pay with what we save", d: "Healthy, connected people lean on the ER, the hospital, and the jail far less. Maple is funded by those savings — through managed-care (Medi-Cal) dollars, grants, and gifts." },
-            ].map((m, i) => (
-              <div key={i}>
-                <div className="font-serif font-bold lowercase leading-tight" style={{ fontSize: "clamp(20px, 2.2vw, 26px)", color: "var(--amber-soft)" }}>{m.n}.</div>
-                <p className="text-[15px] leading-relaxed text-stone-300 mt-3">{m.d}</p>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   );
@@ -1688,8 +1668,6 @@ function App() {
       <Thesis/>
       <TheCase/>
       <WhatIsCommunity/>
-      <BraidedFunding/>
-      <Partners/>
       <TheWork/>
       <Transitions/>
       <TheStudy/>
