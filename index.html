@@ -261,40 +261,42 @@ function Thesis() {
   return (
     <section id="thesis" className="py-24 px-6 relative">
       <div className="max-w-5xl mx-auto">
-        <div className="grid md:grid-cols-[1fr_1.4fr] gap-12 md:gap-16 items-start">
-          <div className="reveal">
-            <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--maple)" }}>We are facing a public health crisis</span>
-            <h2 className="font-serif font-bold lowercase mt-5 leading-[0.95] tracking-tight" style={{ color: "var(--ink)", fontSize: "clamp(40px, 6vw, 76px)" }}>
-              the loss of community is a <span className="italic" style={{ color: "var(--maple)" }}>health crisis.</span>
-            </h2>
+        {/* Crisis */}
+        <div className="reveal max-w-4xl">
+          <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--maple)" }}>We are facing a public health crisis</span>
+          <h2 className="font-serif font-bold lowercase mt-5 leading-[0.95] tracking-tight" style={{ color: "var(--ink)", fontSize: "clamp(40px, 6vw, 76px)" }}>
+            the loss of community is a <span className="italic" style={{ color: "var(--maple)" }}>health crisis.</span>
+          </h2>
+        </div>
 
-            {/* Surgeon General callout */}
-            <div className="mt-7 rounded-2xl border border-stone-200 bg-white p-6">
-              <div className="text-[10px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "var(--maple-deep)" }}>U.S. Surgeon General · 2023</div>
-              <p className="text-[15px] leading-relaxed text-stone-700">In 2023, the U.S. Surgeon General issued a formal advisory declaring loneliness and isolation a national epidemic. Its physical toll rivals our most serious health risks:</p>
-              <ul className="mt-4 space-y-2.5 text-[14px] text-stone-700">
-                <li className="flex gap-3"><span style={{ color: "var(--maple)" }}>•</span><span>As deadly as smoking up to <strong style={{ color: "var(--ink)" }}>15 cigarettes a day</strong>.</span></li>
-                <li className="flex gap-3"><span style={{ color: "var(--maple)" }}>•</span><span>A greater risk to health than <strong style={{ color: "var(--ink)" }}>obesity or physical inactivity</strong>.</span></li>
-                <li className="flex gap-3"><span style={{ color: "var(--maple)" }}>•</span><span>Raises the risk of <strong style={{ color: "var(--ink)" }}>heart disease (+29%), stroke (+32%), and dementia (+50%)</strong>.</span></li>
-                <li className="flex gap-3"><span style={{ color: "var(--maple)" }}>•</span><span>An epidemic on the scale of <strong style={{ color: "var(--ink)" }}>tobacco and opioids</strong>.</span></li>
-              </ul>
-              <a href="https://www.hhs.gov/sites/default/files/surgeon-general-social-connection-advisory.pdf" target="_blank" rel="noopener" className="mt-5 inline-flex items-center gap-2 text-[13px] font-semibold underline-grow" style={{ color: "var(--maple-deep)" }}>
-                Read the advisory
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
-              </a>
-            </div>
-          </div>
-          <div className="reveal pt-2">
-            <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--maple)" }}>Our Mission</span>
-            <p className="mt-5 text-lg text-stone-700 leading-relaxed font-medium">
-              If community were a pill, every doctor would prescribe it — and every insurance company would reimburse it. Maple is a nonprofit led by two doctors on a mission to make that a reality through <strong style={{ color: "var(--ink)" }}>health care funding, infrastructure, research, and education</strong>.
-            </p>
-            <div className="mt-8">
-              <div className="text-[11px] font-bold uppercase tracking-[0.2em] mb-3" style={{ color: "var(--maple)" }}>Learn more about Community Care Hubs</div>
-              <div className="flex flex-wrap gap-3">
-                <a href="https://www.dhcs.ca.gov/CalAIM/Pages/CalAIM-PATH.aspx" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-stone-300 bg-white text-[14px] font-semibold lift" style={{ color: "var(--maple-deep)" }}>Department of Health Care Services <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
-                <a href="https://aspe.hhs.gov/reports/community-care-hubs" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-stone-300 bg-white text-[14px] font-semibold lift" style={{ color: "var(--maple-deep)" }}>U.S. Health &amp; Human Services <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
-              </div>
+        {/* Surgeon General callout */}
+        <div className="reveal mt-8 max-w-2xl rounded-2xl border border-stone-200 bg-white p-6 md:p-7">
+          <div className="text-[10px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "var(--maple-deep)" }}>U.S. Surgeon General · 2023</div>
+          <p className="text-[15px] leading-relaxed text-stone-700">In 2023, the U.S. Surgeon General issued a formal advisory declaring loneliness and isolation a national epidemic. Its physical toll rivals our most serious health risks:</p>
+          <ul className="mt-4 space-y-2.5 text-[14px] text-stone-700">
+            <li className="flex gap-3"><span style={{ color: "var(--maple)" }}>•</span><span>As deadly as smoking up to <strong style={{ color: "var(--ink)" }}>15 cigarettes a day</strong>.</span></li>
+            <li className="flex gap-3"><span style={{ color: "var(--maple)" }}>•</span><span>A greater risk to health than <strong style={{ color: "var(--ink)" }}>obesity or physical inactivity</strong>.</span></li>
+            <li className="flex gap-3"><span style={{ color: "var(--maple)" }}>•</span><span>Raises the risk of <strong style={{ color: "var(--ink)" }}>heart disease (+29%), stroke (+32%), and dementia (+50%)</strong>.</span></li>
+            <li className="flex gap-3"><span style={{ color: "var(--maple)" }}>•</span><span>An epidemic on the scale of <strong style={{ color: "var(--ink)" }}>tobacco and opioids</strong>.</span></li>
+          </ul>
+          <a href="https://www.hhs.gov/sites/default/files/surgeon-general-social-connection-advisory.pdf" target="_blank" rel="noopener" className="mt-5 inline-flex items-center gap-2 text-[13px] font-semibold underline-grow" style={{ color: "var(--maple-deep)" }}>
+            Read the advisory
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+          </a>
+        </div>
+
+        {/* Mission */}
+        <div className="reveal mt-16 pt-12 border-t border-stone-200 max-w-3xl">
+          <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--maple)" }}>Our Mission</span>
+          <p className="mt-5 text-lg text-stone-700 leading-relaxed font-medium">
+            If community were a pill, every doctor would prescribe it — and every insurance company would reimburse it. Maple is a nonprofit led by two doctors on a mission to make that a reality through <strong style={{ color: "var(--ink)" }}>health care funding, infrastructure, research, and education</strong>.
+          </p>
+          <div className="mt-8">
+            <div className="text-[11px] font-bold uppercase tracking-[0.2em] mb-3" style={{ color: "var(--maple)" }}>Learn more about Community Care Hubs</div>
+            <div className="flex flex-wrap gap-3">
+              <a href="https://www.dhcs.ca.gov/services/the-mcp-hub-toolkit-a-resource-for-mcps-and-calaim-providers/" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-stone-300 bg-white text-[14px] font-semibold lift" style={{ color: "var(--maple-deep)" }}>Department of Health Care Services <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+              <a href="https://www.chcf.org/wp-content/uploads/2024/10/ExploringEmergingMediCalCommunityCareHubs2024.pdf" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-stone-300 bg-white text-[14px] font-semibold lift" style={{ color: "var(--maple-deep)" }}>California Health Care Foundation <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+              <a href="https://aspe.hhs.gov/reports/community-care-hubs" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-stone-300 bg-white text-[14px] font-semibold lift" style={{ color: "var(--maple-deep)" }}>U.S. Health &amp; Human Services <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
             </div>
           </div>
         </div>
