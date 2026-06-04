@@ -284,21 +284,22 @@ function Thesis() {
               </a>
             </div>
           </div>
-          <div className="reveal pt-2 space-y-6 text-lg text-stone-700 leading-relaxed font-medium">
-            <p>The strongest predictor of whether someone ends up hospitalized or incarcerated isn't their diagnosis or their record. It's whether they have people who care. A family who picks up the phone. A neighbor next door. Anyone who notices — a friend, a colleague, a community health worker, a case manager — the people we interact with regularly, whoever they may be.</p>
+          <div className="reveal pt-2">
+            <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--maple)" }}>Maple's Mission</span>
+            <p className="font-serif mt-5 leading-snug" style={{ color: "var(--ink)", fontSize: "clamp(24px, 3.2vw, 40px)" }}>
+              Maple is a nonprofit <span className="italic" style={{ color: "var(--maple)" }}>Community Care Hub</span> that provides funding, operational support, research, and education to support healthy communities.
+            </p>
           </div>
         </div>
 
         {/* What we do — three arms (combined into the We-believe section) */}
         <div className="reveal mt-12">
-          <p className="font-serif leading-snug mb-8" style={{ color: "var(--ink)", fontSize: "clamp(22px, 3vw, 34px)" }}>
-            Maple supports healthy community <span className="italic" style={{ color: "var(--maple)" }}>in three ways:</span>
-          </p>
-          <div className="grid sm:grid-cols-3 gap-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { n: "01", t: "Funding & Operations", d: "Move resources and operational support to the people and organizations already building healthy community." },
-              { n: "02", t: "Research", d: "Study and improve the work — learning what helps people stay healthy and connected." },
-              { n: "03", t: "Education", d: "Explain how community care works — from community health workers to Community Care Hubs." },
+              { n: "01", t: "Funding", d: "Move resources to the people and organizations already building healthy community." },
+              { n: "02", t: "Operational Support", d: "Provide the infrastructure that lets community organizations receive and use that funding." },
+              { n: "03", t: "Research", d: "Study and improve the work — learning what helps people stay healthy and connected." },
+              { n: "04", t: "Education", d: "Explain how community care works — from community health workers to Community Care Hubs." },
             ].map((m, i) => (
               <div key={i} className="rounded-2xl bg-white border border-stone-200 p-6">
                 <div className="font-serif text-[13px] font-bold" style={{ color: "var(--maple)" }}>{m.n}</div>
