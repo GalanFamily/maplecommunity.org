@@ -442,82 +442,63 @@ function WhoWeAre() {
 
 /* ---------- The case for community: research ---------- */
 function TheCase() {
-  // NOTE: every statistic below is sourced and fact-checked (June 2026). Keep citations with any edits.
+  // Every statistic is sourced and fact-checked (June 2026). Keep citations with any edits.
   const stats = [
-    {
-      tag: "Community",
-      big: "74%",
-      sub: "74% of Americans do not feel a strong sense of community.",
-      src: "American Home Shield · Digital Third Coast",
-      c: "var(--maple)",
-    },
-    {
-      tag: "Neighbors",
-      big: "13%",
-      sub: "Only 13% of Americans know their neighbors' names.",
-      src: "American Home Shield · Digital Third Coast",
-      c: "var(--maple)",
-    },
-    {
-      tag: "Isolation",
-      big: "54%",
-      sub: "54% of American adults report feeling isolated.",
-      src: "American Psychological Association",
-      c: "var(--moss)",
-    },
-    {
-      tag: "Schools",
-      big: "≈ 2×",
-      sub: "Chronic absenteeism roughly doubled — from about 15% before the pandemic to nearly 30% by 2021–22.",
-      src: "U.S. Dept. of Education · Brookings",
-      c: "var(--pink)",
-    },
+    { big: "74%", pct: 74, sub: "of Americans don't feel a strong sense of community.", src: "American Home Shield · Digital Third Coast" },
+    { big: "13%", pct: 13, sub: "of Americans know their neighbors' names.", src: "American Home Shield · Digital Third Coast" },
+    { big: "54%", pct: 54, sub: "of adults report feeling isolated.", src: "American Psychological Association" },
   ];
 
   const illness = [
-    {
-      big: "49,000+",
-      sub: "Americans die by suicide each year — a leading cause of death for young people.",
-      src: "CDC, 2022",
-    },
-    {
-      big: "15 / day",
-      viz: "cigs",
-      sub: "The mortality risk of social disconnection is comparable to smoking up to 15 cigarettes a day.",
-      src: "U.S. Surgeon General's Advisory, 2023",
-    },
-    {
-      big: "+50%",
-      sub: "Social isolation raises the risk of dementia by about 50% in older adults — and raises the risk of heart disease and stroke, too.",
-      src: "U.S. Surgeon General's Advisory, 2023",
-    },
-    {
-      big: "42%",
-      sub: "of U.S. high school students report feeling persistently sad or hopeless. This represents a 50% increase from previous decades.",
-      src: "CDC, Youth Risk Behavior Survey",
-    },
+    { big: "15", viz: "cigs", sub: "Social disconnection is as deadly as smoking up to 15 cigarettes a day.", src: "U.S. Surgeon General's Advisory, 2023" },
+    { big: "+50%", viz: "up", sub: "higher risk of dementia in older adults — alongside higher risk of heart disease and stroke.", src: "U.S. Surgeon General's Advisory, 2023" },
+    { big: "42%", pct: 42, sub: "of U.S. high schoolers feel persistently sad or hopeless — up about 50% in a decade.", src: "CDC, Youth Risk Behavior Survey" },
   ];
 
-  // 2d — three stats: a number, a number, and a cost.
   const health = [
-    {
-      big: "≈ 70%",
-      sub: "Socially isolated patients face up to a 68% higher risk of hospitalization.",
-      src: "Manemann et al., 2018",
-    },
-    {
-      big: "6×",
-      sub: "more likely to be reincarcerated for people who had no visitors while incarcerated, versus those with three or more.",
-      src: "California parolee study · Prison Policy Initiative",
-    },
-    {
-      big: "$6.7B",
-      sub: "in additional Medicare spending every year is linked to social isolation among older adults.",
-      src: "AARP Public Policy Institute",
-    },
+    { big: "≈70%", pct: 70, sub: "higher risk of hospitalization for socially isolated patients.", src: "Manemann et al., 2018" },
+    { big: "6×", viz: "mult", n: 6, sub: "more likely to be reincarcerated with no visitors, versus those with three or more.", src: "California parolee study · Prison Policy Initiative" },
+    { big: "$6.7B", viz: "cost", sub: "in extra Medicare spending every year, linked to social isolation among older adults.", src: "AARP Public Policy Institute" },
   ];
 
   const [showData, setShowData] = useState(false);
+
+  // One stat, told visually.
+  const Stat = (s, i) => (
+    <div key={i} className="rounded-3xl p-7 grain flex flex-col justify-between min-h-[250px]" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)" }}>
+      <div>
+        <div className="font-serif font-bold leading-none" style={{ fontSize: "clamp(42px, 5vw, 66px)", color: "var(--amber-soft)" }}>{s.big}</div>
+        {typeof s.pct === "number" && (
+          <div className="mt-5 h-2.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.12)" }} aria-hidden="true">
+            <div className="h-full rounded-full" style={{ width: s.pct + "%", background: "var(--amber-soft)" }}></div>
+          </div>
+        )}
+        {s.viz === "cigs" && (
+          <div className="flex gap-[4px] mt-5" aria-hidden="true">
+            {Array.from({length: 15}).map((_, k) => (<span key={k} style={{ width: "5px", height: "26px", borderRadius: "1px", background: k < 14 ? "#F4C99F" : "var(--maple)", opacity: 0.85 }}></span>))}
+          </div>
+        )}
+        {s.viz === "mult" && (
+          <div className="flex gap-1.5 mt-5" aria-hidden="true">
+            {Array.from({length: s.n}).map((_, k) => (<span key={k} style={{ width: "12px", height: "26px", borderRadius: "3px", background: "var(--amber-soft)", opacity: 0.32 + k * 0.12 }}></span>))}
+          </div>
+        )}
+        {s.viz === "up" && (
+          <div className="mt-5" aria-hidden="true"><svg width="50" height="28" viewBox="0 0 50 28" fill="none" stroke="var(--amber-soft)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M2 26 L18 14 L30 19 L48 3"/><path d="M37 3 L48 3 L48 14"/></svg></div>
+        )}
+      </div>
+      <div className="mt-5">
+        <p className="text-[14px] leading-snug text-stone-200">{s.sub}</p>
+        <div className="text-[10px] uppercase tracking-[0.16em] font-bold text-stone-500 mt-3">{s.src}</div>
+      </div>
+    </div>
+  );
+
+  const chapters = [
+    { lead: "First — ", hi: "we pulled apart.", data: stats },
+    { lead: "Then — ", hi: "it started making us sick.", data: illness },
+    { lead: "And it landed in our most expensive, least humane places — ", hi: "hospitals and jails.", data: health },
+  ];
 
   return (
     <section id="case" className="py-16 px-6 relative" style={{ background: "var(--ink)", color: "#fff" }}>
@@ -536,88 +517,25 @@ function TheCase() {
           </p>
         </div>
 
-
         <div className="reveal flex justify-center">
           <button type="button" onClick={() => setShowData(v => !v)} className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm border transition" style={{ borderColor: "rgba(244,201,159,0.45)", color: "var(--amber-soft)", background: showData ? "rgba(244,201,159,0.08)" : "transparent" }}>
-            {showData ? "Hide the data" : "Review the data"}
+            {showData ? "Hide the data" : "See the data"}
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" style={{ transform: showData ? "rotate(180deg)" : "none", transition: "transform .3s" }}><path d="M6 9l6 6 6-6"/></svg>
           </button>
         </div>
 
         {showData && (
-        <div className="mt-16">
-          <div className="text-[10px] font-bold uppercase tracking-[0.28em] mb-6" style={{ color: "var(--amber-soft)" }}>We're pulling apart</div>
-
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
-            {stats.map((s, i) => (
-              <div key={i} className="rounded-3xl p-7 grain flex flex-col justify-between min-h-[230px]" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)" }}>
-                <div>
-                  <div className="text-[10px] font-bold uppercase tracking-[0.2em] mb-4" style={{ color: s.c }}>{s.tag}</div>
-                  <div className="font-serif font-bold leading-none" style={{ fontSize: "clamp(34px, 4vw, 56px)", color: "#fff" }}>
-                    {s.big}
-                  </div>
-                </div>
-                <div>
-                  <p className="text-[14px] leading-snug text-stone-200 mt-4">{s.sub}</p>
-                  <div className="text-[10px] uppercase tracking-[0.18em] font-bold text-stone-500 mt-4">{s.src}</div>
-                </div>
+        <div className="mt-16 space-y-16">
+          {chapters.map((ch, ci) => (
+            <div key={ci}>
+              <p className="font-serif leading-snug max-w-3xl mb-8" style={{ fontSize: "clamp(26px, 3.6vw, 44px)" }}>
+                {ch.lead}<span className="italic" style={{ color: "var(--amber-soft)" }}>{ch.hi}</span>
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {ch.data.map((s, i) => Stat(s, i))}
               </div>
-            ))}
-          </div>
-
-          <div className="max-w-3xl mb-10">
-            <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--amber-soft)" }}>It's making us sick</span>
-            <p className="mt-5 text-lg leading-relaxed font-medium text-stone-300">
-              Isolation doesn't just feel bad — it makes us physically ill. The loss of community is one of the most under-counted public-health emergencies we have.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
-            {illness.map((s, i) => (
-              <div key={i} className="rounded-3xl p-7 grain flex flex-col justify-between min-h-[240px]" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)" }}>
-                <div>
-                  <div className="font-serif font-bold leading-none" style={{ fontSize: "clamp(34px, 4vw, 56px)", color: "var(--amber-soft)" }}>
-                    {s.big}
-                  </div>
-                  {s.viz === "cigs" && (
-                    <div className="flex gap-[3px] mt-4" aria-hidden="true">
-                      {Array.from({length: 15}).map((_, k) => (
-                        <span key={k} style={{ width: "4px", height: "20px", borderRadius: "1px", background: k < 14 ? "#F4C99F" : "var(--maple)", opacity: 0.85 }}></span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                <div>
-                  <p className="text-[14px] leading-snug text-stone-200 mt-4">{s.sub}</p>
-                  <div className="text-[10px] uppercase tracking-[0.16em] font-bold text-stone-500 mt-3">{s.src}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="max-w-3xl mb-12">
-            <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--amber-soft)" }}>It's overloading hospitals and jails</span>
-            <h3 className="font-serif font-bold lowercase mt-5 leading-[0.97] tracking-tight" style={{ fontSize: "clamp(34px, 5vw, 60px)" }}>
-              the loss of healthy community overloads the <span className="italic" style={{ color: "var(--amber-soft)" }}>ER, the hospital, and the justice system.</span>
-            </h3>
-            <p className="mt-6 text-lg leading-relaxed font-medium text-stone-300">
-              When the community around someone thins out, they shift to the most expensive, least humane places we have. Loneliness and isolation drive emergency room use, hospitalization, and the cycles that lead to incarceration.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {health.map((s, i) => (
-              <div key={i} className="rounded-3xl p-7 grain flex flex-col justify-between min-h-[230px]" style={{ background: "linear-gradient(160deg, rgba(168,52,26,0.32) 0%, rgba(107,31,14,0.32) 100%)", border: "1px solid rgba(244,201,159,0.22)" }}>
-                <div className="font-serif font-bold leading-none" style={{ fontSize: "clamp(34px, 4vw, 52px)", color: "var(--amber-soft)" }}>
-                  {s.big}
-                </div>
-                <div>
-                  <p className="text-[14px] leading-snug text-stone-200 mt-4">{s.sub}</p>
-                  <div className="text-[10px] uppercase tracking-[0.18em] font-bold text-stone-400 mt-4">{s.src}</div>
-                </div>
-              </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
         )}
 
