@@ -278,15 +278,15 @@ function Thesis() {
           <p className="font-serif leading-snug mb-8" style={{ color: "var(--ink)", fontSize: "clamp(22px, 3vw, 34px)" }}>
             Maple supports healthy community <span className="italic" style={{ color: "var(--maple)" }}>in three ways:</span>
           </p>
-          <div className="grid sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {[
               { n: "01", t: "Funding & Operations", d: "Move resources and operational support to the people and organizations already building healthy community." },
-              { n: "02", t: "Research & Evaluations", d: "Study and improve the work — learning what helps people stay healthy and connected." },
+              { n: "02", t: "Research", d: "Study and improve the work — learning what helps people stay healthy and connected." },
               { n: "03", t: "Education", d: "Explain how community care works — from community health workers to Community Care Hubs." },
             ].map((m, i) => (
               <div key={i} className="rounded-2xl bg-white border border-stone-200 p-6">
                 <div className="font-serif text-[13px] font-bold" style={{ color: "var(--maple)" }}>{m.n}</div>
-                <div className="font-serif font-bold lowercase text-[20px] mt-2" style={{ color: "var(--ink)" }}>{m.t}.</div>
+                <div className="font-serif font-bold lowercase text-[18px] mt-2 whitespace-nowrap" style={{ color: "var(--ink)" }}>{m.t}.</div>
                 <p className="text-[14px] leading-relaxed text-stone-600 mt-2">{m.d}</p>
               </div>
             ))}
