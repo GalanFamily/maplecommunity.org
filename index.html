@@ -315,19 +315,6 @@ function Thesis() {
 
 /* ---------- What is community? (the grid) ---------- */
 function WhatIsCommunity() {
-  const items = [
-    { label: "Family",                 color: "var(--maple)" },
-    { label: "Neighbors",              color: "var(--amber)" },
-    { label: "Neighborhood assocs.",   color: "var(--moss)" },
-    { label: "Community-based orgs",   color: "var(--maple-deep)" },
-    { label: "Probation",              color: "var(--ink)" },
-    { label: "Clinics",                color: "var(--maple)" },
-    { label: "Faith communities",      color: "var(--amber)" },
-    { label: "Service clubs",          color: "var(--moss)" },
-    { label: "Schools",                color: "var(--pink)" },
-    { label: "County agencies",        color: "var(--maple-deep)" },
-    { label: "The corner store",       color: "var(--maple)" },
-  ];
   return (
     <section id="community" className="py-24 px-6 relative" style={{ background: "var(--paper-2)" }}>
       <div className="max-w-6xl mx-auto">
@@ -341,22 +328,10 @@ function WhatIsCommunity() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3">
-          {items.map((it, i) => (
-            <div
-              key={i}
-              className="reveal rounded-2xl border border-stone-200 bg-white p-5 flex flex-col justify-between min-h-[120px] lift"
-              style={{ transitionDelay: `${i * 30}ms` }}
-            >
-              <span className="w-2 h-2 rounded-full" style={{ background: it.color }}></span>
-              <div className="font-serif font-bold lowercase text-[18px] leading-tight" style={{ color: "var(--ink)" }}>
-                {it.label}.
-              </div>
-            </div>
-          ))}
-          <div className="reveal rounded-2xl p-5 flex items-center justify-center min-h-[120px] border border-dashed border-stone-300 text-stone-500 text-[13px] font-medium italic font-serif">
-            …and a hundred more.
-          </div>
+        <div className="reveal max-w-3xl">
+          <p className="font-serif leading-snug" style={{ color: "var(--ink)", fontSize: "clamp(22px, 3vw, 34px)" }}>
+            A family who picks up the phone. A neighbor next door. Anyone who notices — <span className="italic" style={{ color: "var(--maple)" }}>a friend, a colleague, a community health worker, a case manager</span> — the people we interact with regularly, whoever they may be.
+          </p>
         </div>
 
         {/* How we do the work */}
