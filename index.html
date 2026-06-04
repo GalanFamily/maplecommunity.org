@@ -264,9 +264,25 @@ function Thesis() {
         <div className="grid md:grid-cols-[1fr_1.4fr] gap-12 md:gap-16 items-start">
           <div className="reveal">
             <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--maple)" }}>We believe</span>
+            {/* EXPERIMENT: trying "public health crisis" framing in place of "community is medicine." Revert this h2 + callout to restore. */}
             <h2 className="font-serif font-bold lowercase mt-5 leading-[0.95] tracking-tight" style={{ color: "var(--ink)", fontSize: "clamp(40px, 6vw, 76px)" }}>
-              community is <span className="italic" style={{ color: "var(--maple)" }}>medicine.</span>
+              community is facing a <span className="italic" style={{ color: "var(--maple)" }}>public health crisis.</span>
             </h2>
+
+            {/* Surgeon General callout */}
+            <div className="mt-7 rounded-2xl border border-stone-200 bg-white p-6">
+              <div className="text-[10px] font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "var(--maple-deep)" }}>U.S. Surgeon General · 2023</div>
+              <p className="text-[15px] leading-relaxed text-stone-700">The U.S. Surgeon General has declared loneliness and isolation an epidemic. Its physical toll rivals our most serious health risks:</p>
+              <ul className="mt-4 space-y-2.5 text-[14px] text-stone-700">
+                <li className="flex gap-3"><span style={{ color: "var(--maple)" }}>•</span><span>As deadly as smoking up to <strong style={{ color: "var(--ink)" }}>15 cigarettes a day</strong>.</span></li>
+                <li className="flex gap-3"><span style={{ color: "var(--maple)" }}>•</span><span>A greater risk to health than <strong style={{ color: "var(--ink)" }}>obesity or physical inactivity</strong>.</span></li>
+                <li className="flex gap-3"><span style={{ color: "var(--maple)" }}>•</span><span>An epidemic on the scale of <strong style={{ color: "var(--ink)" }}>tobacco and opioids</strong>.</span></li>
+              </ul>
+              <a href="https://www.hhs.gov/sites/default/files/surgeon-general-social-connection-advisory.pdf" target="_blank" rel="noopener" className="mt-5 inline-flex items-center gap-2 text-[13px] font-semibold underline-grow" style={{ color: "var(--maple-deep)" }}>
+                Read the advisory
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+              </a>
+            </div>
           </div>
           <div className="reveal pt-2 space-y-6 text-lg text-stone-700 leading-relaxed font-medium">
             <p>The strongest predictor of whether someone ends up hospitalized or incarcerated isn't their diagnosis or their record. It's whether they have people who care. A family who picks up the phone. A neighbor next door. Anyone who notices — a friend, a colleague, a community health worker, a case manager — the people we interact with regularly, whoever they may be.</p>
