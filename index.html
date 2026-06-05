@@ -408,28 +408,6 @@ function WhoWeAre() {
           <div className="mt-8 text-lg text-stone-700 leading-relaxed font-medium">
             <p>Two paths, the same conclusion. One of us was out in the neighborhood — throwing Flamingo Fridays, hosting family dinners, weaving a block together. The other was in the hospital, watching people arrive lonelier and return more often.</p>
           </div>
-
-          {/* The team */}
-          <div className="mt-10">
-            <div className="text-[10px] font-bold uppercase tracking-[0.28em] mb-5" style={{ color: "var(--maple)" }}>The team</div>
-            {/* OPEN: photos to come (ideally each with the maple tree behind them). Confirm Jacob Parkinson's exact title/framework. */}
-            <div className="grid sm:grid-cols-2 gap-4">
-              {[
-                { name: "Megan Galán", creds: "MD, MS", role: "Stanford-trained hospitalist", initials: "MG" },
-                { name: "Emilio Galán", creds: "MD, MS", role: "Established the first Community Care Hub in Santa Clara County", initials: "EG" },
-                { name: "Marta Galán", creds: "MPP, MSW", role: "Bureau Chief of Homelessness, California Department of Social Services", initials: "MG" },
-                { name: "Jacob Parkinson", creds: "", role: "Deputy Director, California Data Exchange Framework", initials: "JP" },
-              ].map((p, i) => (
-                <div key={i} className="rounded-2xl border border-stone-200 bg-white p-6 flex gap-4 items-start">
-                  <div className="w-14 h-14 rounded-full flex items-center justify-center font-serif font-bold text-[17px] shrink-0" style={{ background: "var(--cream)", color: "var(--maple-deep)" }}>{p.initials}</div>
-                  <div>
-                    <div className="font-serif font-bold text-[18px] leading-tight" style={{ color: "var(--ink)" }}>{p.name}{p.creds ? <span className="text-stone-400">, {p.creds}</span> : null}</div>
-                    <p className="text-stone-600 text-[14px] leading-relaxed mt-1.5">{p.role}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
 
         <div className="reveal mt-10">
@@ -456,6 +434,28 @@ function WhoWeAre() {
           </div>
         </div>
         )}
+
+        {/* The team */}
+        <div className="reveal mt-14">
+          <div className="text-[10px] font-bold uppercase tracking-[0.28em] mb-5" style={{ color: "var(--maple)" }}>The team</div>
+          {/* OPEN: photos to come (ideally each with the maple tree behind them). Confirm Jacob Parkinson's exact title/framework. */}
+          <div className="grid sm:grid-cols-2 gap-4">
+            {[
+              { name: "Megan Galán", creds: "MD, MS", role: "Stanford-trained hospitalist", initials: "MG" },
+              { name: "Emilio Galán", creds: "MD, MS", role: "Established the first Community Care Hub in Santa Clara County", initials: "EG" },
+              { name: "Marta Galán", creds: "MPP, MSW", role: "Bureau Chief of Homelessness, California Department of Social Services", initials: "MG" },
+              { name: "Jacob Parkinson", creds: "", role: "Deputy Director, California Data Exchange Framework", initials: "JP" },
+            ].map((p, i) => (
+              <div key={i} className="rounded-2xl border border-stone-200 bg-white p-6 flex gap-4 items-start">
+                <div className="w-14 h-14 rounded-full flex items-center justify-center font-serif font-bold text-[17px] shrink-0" style={{ background: "var(--cream)", color: "var(--maple-deep)" }}>{p.initials}</div>
+                <div>
+                  <div className="font-serif font-bold text-[18px] leading-tight" style={{ color: "var(--ink)" }}>{p.name}{p.creds ? <span className="text-stone-400">, {p.creds}</span> : null}</div>
+                  <p className="text-stone-600 text-[14px] leading-relaxed mt-1.5">{p.role}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
