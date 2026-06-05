@@ -1234,27 +1234,22 @@ function Partners() {
 
 /* ---------- Transitions to the Community ---------- */
 function Transitions() {
-  // CareHub-style journey constellation. A person bounces among community nodes above
-  // the line; falling through the cracks drops them below it to the ED, hospital, and jail.
-  const COMM   = { label: "Community", x: 500, y: 180 };
-  const FAMILY = { label: "Family",        x: 300, y: 92,  tone: "#A8341A" };
-  const NEIGH  = { label: "Neighbors",     x: 500, y: 70,  tone: "#D97706" };
-  const FAITH  = { label: "Faith",         x: 700, y: 92,  tone: "#C2410C" };
-  const CLINIC = { label: "Clinic",        x: 812, y: 222, tone: "#4A6741" };
-  const CLUB   = { label: "Service club",  x: 650, y: 322, tone: "#D14B6A" };
-  const MUTUAL = { label: "Mutual aid",    x: 350, y: 322, tone: "#A8341A" };
-  const NABE   = { label: "Neighborhood",  x: 188, y: 222, tone: "#D97706" };
-  const community = [FAMILY, NEIGH, FAITH, CLINIC, CLUB, MUTUAL, NABE];
-  const ED   = { label: "Emergency Dept", lines: ["Emergency", "Dept."], x: 270, y: 472, tone: "#6B1F0E" };
-  const HOSP = { label: "Hospital",       x: 500, y: 492, tone: "#6B1F0E" };
-  const JAIL = { label: "Jail",           x: 730, y: 472, tone: "#2B1810" };
-  const cracks = [ED, HOSP, JAIL];
-  const sequence = [
-    COMM, FAMILY, COMM, NEIGH, COMM, FAITH, CLINIC, ED, HOSP, COMM,
-    CLUB, COMM, NABE, COMM, MUTUAL, JAIL, COMM, NEIGH, FAITH, ED,
-    COMM, FAMILY, COMM, CLINIC, COMM, CLUB, HOSP, COMM, NABE, COMM
+  // A person hops along a row of community supports; where there's a gap, they fall
+  // through into the hospital or jail below. Warm handoffs close the gaps.
+  const community = [
+    { label: "Family",    x: 110, icon: "heart",  tone: "#A8341A" },
+    { label: "Neighbors", x: 268, icon: "house",  tone: "#D97706" },
+    { label: "Faith",     x: 426, icon: "faith",  tone: "#C2410C" },
+    { label: "Clinic",    x: 584, icon: "plus",   tone: "#4A6741" },
+    { label: "School",    x: 742, icon: "book",   tone: "#D14B6A" },
+    { label: "Friends",   x: 900, icon: "people", tone: "#A8341A" },
   ];
-  const motionPath = sequence.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ");
+  const cracks = [
+    { label: "Hospital", x: 505, tone: "#6B1F0E" },
+    { label: "Jail",     x: 663, tone: "#2B1810" },
+  ];
+  // Hops (arc up) between adjacent dots; two falls per loop into the gaps (hospital, jail).
+  const motionPath = "M 110 130 Q 189 80 268 130 Q 347 80 426 130 Q 466 235 505 315 Q 545 235 584 130 Q 663 80 742 130 Q 821 80 900 130 Q 821 80 742 130 Q 703 235 663 315 Q 624 235 584 130 Q 505 80 426 130 Q 347 80 268 130 Q 189 80 110 130";
   const principles = [
     {
       n: "01",
@@ -1327,54 +1322,52 @@ function Transitions() {
           </p>
         </div>
 
-        {/* Interactive — CareHub-style journey: bouncing between community above the line,
-            falling through the cracks to the ED, hospital, and jail below it. */}
+        {/* Interactive — a person hops along the community row and falls into the gaps */}
         <div className="reveal rounded-[32px] border border-stone-200 bg-white p-5 md:p-8 mb-12 grain">
           <div className="-mx-2 md:mx-0 overflow-x-auto md:overflow-visible">
-            <svg viewBox="0 0 1000 540" className="block mx-auto h-auto" style={{ minWidth: 720, width: "100%" }} role="img" aria-label="A person bounces between community supports above the line; when they fall through the cracks they drop below it to the emergency department, hospital, and jail, then community brings them back up.">
-              {/* the line / threshold */}
-              <line x1="40" y1="378" x2="960" y2="378" stroke="#2B1810" strokeOpacity="0.28" strokeWidth="2" strokeDasharray="7 7"/>
-              <rect x="40" y="380" width="920" height="142" rx="14" fill="#2B1810" opacity="0.05"/>
-              <text x="52" y="370" fontFamily="Inter" fontSize="11" fontWeight="800" letterSpacing="2" fill="#2B1810" opacity="0.4">ABOVE THE LINE — HELD IN COMMUNITY</text>
-              <text x="52" y="404" fontFamily="Inter" fontSize="11" fontWeight="800" letterSpacing="2" fill="#6B1F0E" opacity="0.6">THROUGH THE CRACKS — ED · HOSPITAL · JAIL</text>
+            <svg viewBox="0 0 1000 390" className="block mx-auto h-auto" style={{ minWidth: 720, width: "100%" }} role="img" aria-label="A person hops along a row of community supports; where there is a gap, they fall through into the hospital or jail below.">
+              {/* the line + the place below it */}
+              <line x1="40" y1="235" x2="960" y2="235" stroke="#2B1810" strokeOpacity="0.22" strokeWidth="2" strokeDasharray="7 7"/>
+              <rect x="40" y="237" width="920" height="140" rx="14" fill="#2B1810" opacity="0.045"/>
+              <text x="52" y="227" fontFamily="Inter" fontSize="11" fontWeight="800" letterSpacing="2" fill="#2B1810" opacity="0.4">HELD IN COMMUNITY</text>
+              <text x="52" y="262" fontFamily="Inter" fontSize="11" fontWeight="800" letterSpacing="2" fill="#6B1F0E" opacity="0.6">THROUGH THE CRACKS</text>
 
-              {/* Community hub */}
-              <g transform={`translate(${COMM.x} ${COMM.y})`}>
-                <text textAnchor="middle" y="-44" fontFamily="Inter" fontSize="10" fontWeight="800" letterSpacing="3" fill="#A8341A">THE HUB</text>
-                <text textAnchor="middle" y="10" fontFamily="Fraunces, serif" fontWeight="700" fontSize="40" fill="#2B1810">Community</text>
-              </g>
-
-              {/* community satellites (above the line) */}
+              {/* community row (stylized icons) */}
               {community.map((p) => (
-                <g key={p.label} transform={`translate(${p.x} ${p.y})`}>
+                <g key={p.label} transform={`translate(${p.x} 130)`}>
                   <circle r="30" fill="#fff" stroke={p.tone} strokeWidth="2.25"/>
-                  <circle r="7" fill={p.tone}/>
-                  <text textAnchor="middle" y="50" fontFamily="Fraunces, serif" fontWeight="600" fontSize="17" fill="#2B1810">{p.label}</text>
+                  <g stroke={p.tone} strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                    {p.icon === "heart" && <path d="M0 7 C-7 1 -11 -4 -6 -9 C-3 -12 0 -9 0 -6 C0 -9 3 -12 6 -9 C11 -4 7 1 0 7 Z"/>}
+                    {p.icon === "house" && <g><path d="M-9 9 V-1 L0 -9 L9 -1 V9 Z"/><path d="M-3 9 V2 H3 V9"/></g>}
+                    {p.icon === "faith" && <g><path d="M-9 9 V-2 L0 -9 L9 -2 V9 Z"/><path d="M0 -9 V-14 M-2.5 -11.5 H2.5"/></g>}
+                    {p.icon === "plus" && <path d="M0 -9 V9 M-9 0 H9"/>}
+                    {p.icon === "book" && <g><path d="M0 -7 V8"/><path d="M0 -7 Q-5 -9 -9 -7 V7 Q-5 6 0 8"/><path d="M0 -7 Q5 -9 9 -7 V7 Q5 6 0 8"/></g>}
+                    {p.icon === "people" && <g><circle cx="-4.5" cy="-3" r="3"/><circle cx="4.5" cy="-3" r="3"/><path d="M-10 9 Q-10 2 -4.5 2 M10 9 Q10 2 4.5 2"/></g>}
+                  </g>
+                  <text textAnchor="middle" y="52" fontFamily="Fraunces, serif" fontWeight="600" fontSize="16" fill="#2B1810">{p.label}</text>
                 </g>
               ))}
 
-              {/* failure nodes (below the line) */}
+              {/* the gaps below — hospital & jail */}
               {cracks.map((p) => (
-                <g key={p.label} transform={`translate(${p.x} ${p.y})`}>
-                  <circle r="30" fill="#2B1810" stroke={p.tone} strokeWidth="2.25"/>
-                  <circle r="7" fill="#F4C99F" fillOpacity="0.7"/>
-                  <text textAnchor="middle" fontFamily="Fraunces, serif" fontWeight="600" fontSize="15" fill="#6B1F0E">
-                    {(p.lines || [p.label]).map((ln, i) => (<tspan key={i} x="0" y={52 + i * 18}>{ln}</tspan>))}
-                  </text>
+                <g key={p.label} transform={`translate(${p.x} 315)`}>
+                  <circle r="28" fill="#2B1810" stroke={p.tone} strokeWidth="2.25"/>
+                  <circle r="6" fill="#F4C99F" fillOpacity="0.7"/>
+                  <text textAnchor="middle" y="48" fontFamily="Fraunces, serif" fontWeight="600" fontSize="15" fill="#6B1F0E">{p.label}</text>
                 </g>
               ))}
 
-              {/* the bouncing person — halo + dot following the same path, rendered last */}
-              <circle cx="0" cy="0" r="18" fill="#A8341A" fillOpacity="0.25">
-                <animateMotion dur="26s" repeatCount="indefinite" path={motionPath}/>
+              {/* the person — halo + dot hopping along the path */}
+              <circle cx="0" cy="0" r="16" fill="#A8341A" fillOpacity="0.25">
+                <animateMotion dur="16s" repeatCount="indefinite" path={motionPath}/>
               </circle>
-              <circle cx="0" cy="0" r="10" fill="#6B1F0E" stroke="#fff" strokeWidth="2">
-                <animateMotion dur="26s" repeatCount="indefinite" path={motionPath}/>
+              <circle cx="0" cy="0" r="9" fill="#6B1F0E" stroke="#fff" strokeWidth="2">
+                <animateMotion dur="16s" repeatCount="indefinite" path={motionPath}/>
               </circle>
             </svg>
           </div>
           <p className="text-stone-600 text-[14px] leading-relaxed mt-4 max-w-2xl">
-            Watch one person move. Held in community, they bounce between the people around them. Lose that web and they fall through the cracks — into the ED, the hospital, or jail. <strong style={{ color: "var(--ink)" }}>Warm handoffs are what keep them above the line.</strong>
+            Watch one person move. They hop from one part of their community to the next — until there's a gap, with no one to catch them, and they fall through into the hospital or jail. <strong style={{ color: "var(--ink)" }}>Warm handoffs close the gaps.</strong>
           </p>
         </div>
 
