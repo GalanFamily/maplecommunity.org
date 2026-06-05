@@ -1476,6 +1476,8 @@ function TheWork() {
 function TheStudy() {
   const webRef = useRef(null);
   const slideWeb = (dir) => webRef.current?.scrollBy({ left: dir * 340, behavior: "smooth" });
+  const resRef = useRef(null);
+  const slideRes = (dir) => resRef.current?.scrollBy({ left: dir * 360, behavior: "smooth" });
   return (
     <section id="study" className="py-32 px-6 relative overflow-hidden" style={{ background: "var(--ink)", color: "#fff" }}>
       <div className="absolute -top-32 -left-32 opacity-[0.06] pointer-events-none">
@@ -1483,27 +1485,85 @@ function TheStudy() {
       </div>
 
       <div className="max-w-6xl mx-auto relative">
-        <div className="reveal max-w-3xl mb-12">
+        <div className="reveal max-w-3xl mb-10">
           <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--amber-soft)" }}>Research &amp; education</span>
-          <h2 className="font-serif font-bold lowercase mt-5 leading-[0.98] tracking-tight" style={{ fontSize: "clamp(36px, 5.5vw, 68px)" }}>
-            how does community keep people <span className="italic" style={{ color: "var(--amber-soft)" }}>out of the hospital and the justice system?</span>
+          <h2 className="font-serif font-bold lowercase mt-5 leading-[1.0] tracking-tight" style={{ fontSize: "clamp(34px, 5vw, 62px)" }}>
+            we believe in the power of <span className="italic" style={{ color: "var(--amber-soft)" }}>solid research</span> to establish what's true.
           </h2>
           <p className="mt-7 text-lg leading-relaxed font-medium text-stone-300">
-            That's an open question — and we hold it honestly. We don't have the answer yet, and we won't claim one we haven't earned. What we can do now is two things: improve our own work, and help people understand it.
+            We work to answer our own questions, improve our programs, and share what we learn.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-5">
-          {[
-            { tag: "Program evaluation", body: "We measure and improve our own programs — what's working, what isn't, and where the next dollar should go. (Internal program evaluation — not human-subjects research.)" },
-            { tag: "Education", body: "We explain how community care actually works — Enhanced Care Management (ECM), what community health workers do, and what a Community Care Hub is." },
-            { tag: "The open question", body: "Over the long run, we want to learn — at the population level — how place-based connection helps keep people healthier and out of the hospital and the justice system. Studied carefully, not assumed." },
-          ].map((c, i) => (
-            <div key={i} className="reveal rounded-3xl p-8 grain min-h-[260px] flex flex-col" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", transitionDelay: `${i*60}ms` }}>
-              <div className="text-[10px] font-bold uppercase tracking-[0.22em]" style={{ color: "var(--amber-soft)" }}>{c.tag}</div>
-              <p className="text-[15px] leading-relaxed text-stone-200 mt-4">{c.body}</p>
+        {/* Featured quote */}
+        <div className="reveal mb-12 rounded-3xl p-8 md:p-10 grain" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)" }}>
+          <div className="font-serif leading-none select-none" style={{ fontSize: "70px", color: "var(--amber-soft)", opacity: 0.25, height: "0.45em" }}>“</div>
+          <p className="font-serif leading-[1.25] max-w-3xl" style={{ fontSize: "clamp(22px, 3.2vw, 38px)" }}>
+            The first principle is that you must not fool yourself — and you are the easiest person to fool.
+          </p>
+          <div className="mt-5 text-[12px] font-bold uppercase tracking-[0.2em]" style={{ color: "var(--amber-soft)" }}>Richard P. Feynman</div>
+        </div>
+
+        {/* Research questions */}
+        <div className="reveal mb-14">
+          <p className="text-lg font-medium text-stone-300 mb-6">We're committed to researching questions like:</p>
+          <div className="grid md:grid-cols-2 gap-4">
+            {[
+              "How does community keep people out of the hospital and the justice system?",
+              "Who is the best person — or group of people — to support someone, given how varied each person's community is? And how do we find and incentivize them?",
+              "What happens when we include parole officers as part of someone's community support?",
+              "At the population level, over the long run, how does place-based connection keep people healthier? Studied carefully, not assumed.",
+            ].map((q, i) => (
+              <div key={i} className="rounded-2xl p-6 grain flex gap-4 items-start" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)" }}>
+                <span className="font-serif font-bold leading-none" style={{ color: "var(--amber-soft)", fontSize: "26px" }}>?</span>
+                <p className="text-[15.5px] leading-relaxed text-stone-200">{q}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Research carousel */}
+        <div className="reveal mb-14">
+          <div className="flex items-end justify-between gap-4 mb-6 flex-wrap">
+            <div className="max-w-2xl">
+              <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--amber-soft)" }}>Research we're reading</span>
+              <p className="text-stone-300 text-[15px] leading-relaxed mt-3">A few of the studies that shape how we think about community and health — including work drawn from Dean Ornish's <span className="italic">Love &amp; Survival</span>.</p>
             </div>
-          ))}
+            <div className="flex gap-2">
+              <button type="button" onClick={() => slideRes(-1)} className="w-11 h-11 rounded-full flex items-center justify-center text-white transition hover:bg-white/10" style={{ border: "1px solid rgba(255,255,255,0.25)" }} aria-label="Previous studies">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+              </button>
+              <button type="button" onClick={() => slideRes(1)} className="w-11 h-11 rounded-full flex items-center justify-center text-white" style={{ background: "var(--maple)" }} aria-label="Next studies">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M9 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+          </div>
+          <div ref={resRef} className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4" style={{ scrollbarWidth: "none" }}>
+            {[
+              { src: "U.S. Surgeon General · 2023", title: "Our Epidemic of Loneliness and Isolation", take: "The advisory: weak social connection raises premature-death risk like smoking 15 cigarettes a day.", href: "https://www.hhs.gov/sites/default/files/surgeon-general-social-connection-advisory.pdf" },
+              { src: "Holt-Lunstad et al. · PLoS Medicine, 2010", title: "Social Relationships and Mortality Risk: A Meta-Analytic Review", take: "Across 148 studies and 300,000+ people, strong ties raised the odds of survival by about 50%.", href: "https://doi.org/10.1371/journal.pmed.1000316" },
+              { src: "Berkman & Syme · Am. J. Epidemiology, 1979", title: "Social Networks, Host Resistance, and Mortality (Alameda County)", take: "People with fewer social ties were 2–3× more likely to die over nine years." },
+              { src: "House, Landis & Umberson · Science, 1988", title: "Social Relationships and Health", take: "Social isolation rivals smoking as a risk factor for early death." },
+              { src: "Egolf et al. · Am. J. Public Health, 1992", title: "The Roseto Effect: A 50-Year Comparison of Mortality Rates", take: "A tight-knit town had far less heart disease — until its close community frayed." },
+              { src: "Ruberman et al. · NEJM, 1984", title: "Psychosocial Influences on Mortality After Myocardial Infarction", take: "Socially isolated heart-attack survivors faced 2–3× the risk of death." },
+              { src: "Williams et al. · JAMA, 1992", title: "Social Resources and Survival in Coronary Artery Disease", take: "Patients without a spouse or confidant were far more likely to die within five years." },
+              { src: "Spiegel et al. · The Lancet, 1989", title: "Psychosocial Treatment and Survival in Metastatic Breast Cancer", take: "A landmark (and later debated) trial linking weekly support groups to longer survival." },
+              { src: "Duwe & Clark · Crim. Justice Policy Review, 2013", title: "Blessed Be the Social Tie That Binds: Prison Visitation & Recidivism", take: "Visits during incarceration measurably reduced reoffending after release." },
+              { src: "Flowers et al. · AARP Public Policy Institute, 2017", title: "Medicare Spends More on Socially Isolated Older Adults", take: "Isolation is tied to about $6.7 billion in extra Medicare spending each year." },
+              { src: "Klinenberg · 2002", title: "Heat Wave: A Social Autopsy of Disaster in Chicago", take: "In a deadly heat wave, better-connected neighborhoods lost far fewer lives." },
+              { src: "Cacioppo & Patrick · 2008", title: "Loneliness: Human Nature and the Need for Social Connection", take: "Loneliness reshapes the body — stress hormones, immunity, sleep, and the heart." },
+              { src: "Christakis & Fowler · NEJM, 2007", title: "The Spread of Obesity in a Large Social Network", take: "Health ripples through social networks — we quietly shape each other." },
+              { src: "Dean Ornish · 1998", title: "Love & Survival: The Healing Power of Intimacy", take: "A physician's synthesis of the evidence that connection itself is medicine." },
+            ].map((s, i) => (
+              <a key={i} href={s.href || ("https://scholar.google.com/scholar?q=" + encodeURIComponent(s.title))} target="_blank" rel="noopener" className="snap-start shrink-0 rounded-3xl p-7 flex flex-col" style={{ width: 320, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)" }}>
+                <div className="text-[11px] font-bold uppercase tracking-[0.14em]" style={{ color: "var(--amber-soft)" }}>{s.src}</div>
+                <div className="font-serif leading-snug mt-4 mb-4 flex-1" style={{ fontSize: "20px", color: "#fff" }}>{s.title}</div>
+                <p className="text-[13.5px] leading-relaxed text-stone-300 mb-5">{s.take}</p>
+                <span className="inline-flex items-center gap-2 text-[13px] font-semibold" style={{ color: "var(--amber-soft)" }}>Read the study <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
+              </a>
+            ))}
+            <div className="shrink-0" style={{ width: 1 }}></div>
+          </div>
         </div>
 
         {/* Webinars — slider */}
