@@ -209,10 +209,10 @@ function Nav() {
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         <a href="#top"><Logo size={34}/></a>
         <div className="hidden md:flex items-center gap-7 text-sm font-medium" style={{ color: "var(--ink)" }}>
-          <a href="#thesis" className="hover:opacity-70">Thesis</a>
           <a href="#case" className="hover:opacity-70">The problem</a>
+          <a href="#thesis" className="hover:opacity-70">Our purpose</a>
           <a href="#community" className="hover:opacity-70">Community</a>
-          <a href="#work" className="hover:opacity-70">Projects</a>
+          <a href="#work" className="hover:opacity-70">What we do</a>
           <a href="#study" className="hover:opacity-70">Research</a>
           <a href="#who" className="hover:opacity-70">Who we are</a>
         </div>
@@ -303,7 +303,7 @@ function Thesis() {
 
         {/* Mission */}
         <div className="reveal mt-16 pt-12 border-t border-stone-200 max-w-3xl">
-          <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--maple)" }}>Our Mission</span>
+          <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--maple)" }}>Our Purpose</span>
           <p className="mt-5 text-lg text-stone-700 leading-relaxed font-medium">
             If community were a pill, every doctor would prescribe it — and every insurance company would reimburse it. Maple is a nonprofit led by two doctors on a mission to make that a reality.
           </p>
@@ -533,10 +533,10 @@ function TheCase() {
         <div className="reveal max-w-3xl mb-14">
           <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--amber-soft)" }}>Why now</span>
           <h2 className="font-serif font-bold lowercase mt-5 leading-[0.95] tracking-tight" style={{ fontSize: "clamp(40px, 6vw, 76px)" }}>
-            the fabric is <span className="italic" style={{ color: "var(--amber-soft)" }}>fraying.</span>
+            we are more <span className="italic" style={{ color: "var(--amber-soft)" }}>disconnected than ever.</span>
           </h2>
           <p className="mt-7 text-lg leading-relaxed font-medium text-stone-300">
-            We are more disconnected than ever. It shows up across every layer of community: the people next door, the dinner table, the classroom, the clubs and congregations we used to join. It's making us sicker and overloading our most expensive and least humane settings — hospitals and jails.
+            This disconnection shows up across every layer of community: the people next door, the dinner table, the classroom, the clubs and congregations we used to join. It's making us sicker and overloading our most expensive and least humane settings — hospitals and jails.
           </p>
         </div>
 
@@ -1279,12 +1279,11 @@ function Partners() {
    when a node's connection fades, they fall through into the hospital or jail below. ---------- */
 function HandoffViz() {
   const NODES = [
-    { x: 110, label: "Family",    icon: "heart",  tone: "#A8341A" },
-    { x: 268, label: "Neighbors", icon: "house",  tone: "#D97706" },
-    { x: 426, label: "Faith",     icon: "faith",  tone: "#C2410C" },
-    { x: 584, label: "Clinic",    icon: "plus",   tone: "#4A6741" },
-    { x: 742, label: "School",    icon: "book",   tone: "#D14B6A" },
-    { x: 900, label: "Friends",   icon: "people", tone: "#A8341A" },
+    { x: 110, label: "Family",          icon: "heart",   tone: "#A8341A" },
+    { x: 308, label: "Health Workers",  icon: "plus",    tone: "#4A6741" },
+    { x: 506, label: "Neighbors",       icon: "house",   tone: "#D97706" },
+    { x: 704, label: "Justice Partners",icon: "justice", tone: "#6B1F0E" },
+    { x: 900, label: "Faith",           icon: "faith",   tone: "#C2410C" },
   ];
   const CRACKS = [{ label: "Hospitalization", x: 280 }, { label: "Incarceration", x: 720 }];
   const ROW_Y = 155, FALL_Y = 290, THRESH = 0.34;
@@ -1307,14 +1306,16 @@ function HandoffViz() {
       const s = sim.current;
       s.prog += dt;
       if (s.mode === "pause" && s.prog >= D.pause) {
-        const next = s.i + 1;
-        if (next >= NODES.length) { s.mode = "reset"; s.prog = 0; }
-        else if (fadeRef.current[next] < THRESH) { s.mode = "fall"; s.prog = 0; s.next = next; s.gapX = (NODES[s.i].x + NODES[next].x) / 2; }
+        // Pick a random next node (not the current one)
+        let next = s.i;
+        let tries = 0;
+        while (next === s.i && tries++ < 10) next = Math.floor(Math.random() * NODES.length);
+        if (fadeRef.current[next] < THRESH) { s.mode = "fall"; s.prog = 0; s.next = next; s.gapX = (NODES[s.i].x + NODES[next].x) / 2; }
         else { s.mode = "hop"; s.prog = 0; s.next = next; }
       } else if (s.mode === "hop" && s.prog >= D.hop) { s.i = s.next; s.mode = "pause"; s.prog = 0; }
       else if (s.mode === "fall" && s.prog >= D.fall) { s.mode = "bottom"; s.prog = 0; }
       else if (s.mode === "bottom" && s.prog >= D.bottom) { s.mode = "reset"; s.prog = 0; }
-      else if (s.mode === "reset" && s.prog >= D.reset) { s.i = 0; s.next = 1; s.mode = "pause"; s.prog = 0; }
+      else if (s.mode === "reset" && s.prog >= D.reset) { s.i = Math.floor(Math.random() * NODES.length); s.mode = "pause"; s.prog = 0; }
       force((v) => (v + 1) & 1023);
       raf = requestAnimationFrame(step);
     };
@@ -1360,8 +1361,7 @@ function HandoffViz() {
               {p.icon === "house" && <g><path d="M-9 9 V-1 L0 -9 L9 -1 V9 Z"/><path d="M-3 9 V2 H3 V9"/></g>}
               {p.icon === "faith" && <g><path d="M-9 9 V-2 L0 -9 L9 -2 V9 Z"/><path d="M0 -9 V-14 M-2.5 -11.5 H2.5"/></g>}
               {p.icon === "plus" && <path d="M0 -9 V9 M-9 0 H9"/>}
-              {p.icon === "book" && <g><path d="M0 -7 V8"/><path d="M0 -7 Q-5 -9 -9 -7 V7 Q-5 6 0 8"/><path d="M0 -7 Q5 -9 9 -7 V7 Q5 6 0 8"/></g>}
-              {p.icon === "people" && <g><circle cx="-4.5" cy="-3" r="3"/><circle cx="4.5" cy="-3" r="3"/><path d="M-10 9 Q-10 2 -4.5 2 M10 9 Q10 2 4.5 2"/></g>}
+              {p.icon === "justice" && <g><path d="M0 -11 V11 M-8 -2 H8"/><path d="M-8 -2 L-10 5 H-6 Z"/><path d="M8 -2 L10 5 H6 Z"/></g>}
             </g>
             <text textAnchor="middle" y="52" fontFamily="Fraunces, serif" fontWeight="600" fontSize="16" fill="#2B1810">{p.label}</text>
           </g>
@@ -1371,9 +1371,18 @@ function HandoffViz() {
           <text key={p.label} x={p.x} y="321" textAnchor="middle" dominantBaseline="middle" fontFamily="Fraunces, serif" fontWeight="700" fontSize="38" fill="#2B1810" opacity="0.6">{p.label}</text>
         ))}
 
-        <g opacity={dop}>
-          <circle cx={dx} cy={dy} r="15" fill="#A8341A" fillOpacity="0.22"/>
-          <circle cx={dx} cy={dy} r="9" fill="#6B1F0E" stroke="#fff" strokeWidth="2"/>
+        {/* Samara dot */}
+        <g opacity={dop} transform={`translate(${dx} ${dy})`}>
+          <g transform="scale(1.6) translate(-8,-10)">
+            {/* left wing */}
+            <path d="M8,10 C6,9 3,7 0,5 C-1,4 -1,2 0,2 C2,2 5,5 8,10 Z" fill="#6B1F0E"/>
+            {/* right wing */}
+            <path d="M8,10 C9,8 12,6 14,5 C15,4 15,3 14,3 C12,3 10,6 8,10 Z" fill="#A8341A"/>
+            {/* node */}
+            <circle cx="8" cy="10" r="1.8" fill="#6B1F0E"/>
+            {/* stem */}
+            <path d="M8,12 C8,14 7.5,16 7.5,18" stroke="#6B1F0E" strokeWidth="1.2" strokeLinecap="round" fill="none"/>
+          </g>
         </g>
       </svg>
     </div>
@@ -1603,11 +1612,12 @@ function TheStudy() {
           </div>
         </div>
 
-        {/* Webinars — slider */}
-        <div className="reveal mt-14">
+        {/* Webinars — separate block with a visual break */}
+        <div className="reveal mt-16 pt-14 border-t border-white/10">
           <div className="flex items-end justify-between gap-4 mb-6 flex-wrap">
             <div className="max-w-2xl">
-              <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--amber-soft)" }}>Free webinars</span>
+              <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--amber-soft)" }}>Education · Free Webinars</span>
+              <h3 className="font-serif font-bold lowercase mt-3 leading-tight" style={{ fontSize: "clamp(24px, 3vw, 36px)" }}>come learn with us.</h3>
               <p className="text-stone-300 text-[15px] leading-relaxed mt-3">
                 Live, 45-minute sessions — open to anyone curious about community care. Register free on Livestorm.
               </p>
