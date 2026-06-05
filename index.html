@@ -50,6 +50,9 @@
   }
   .maple-fall { animation: mapleFall var(--dur, 24s) linear infinite; animation-delay: var(--delay, 0s); }
   .maple-spin { display: inline-block; animation: mapleHeli var(--spin, 1.1s) linear infinite; }
+  /* Warm-handoff: community nodes gently fade — the fragility of connection */
+  @keyframes commPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+  .comm-node { animation: commPulse 6.5s ease-in-out infinite; }
   /* Warm-handoff interactive: gentle bob for the held dot */
   @keyframes bobY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
   .bob { animation: bobY 4s ease-in-out infinite; }
@@ -1249,7 +1252,7 @@ function Transitions() {
     { label: "Jail",     x: 663, tone: "#2B1810" },
   ];
   // Hops (arc up) between adjacent dots; two falls per loop into the gaps (hospital, jail).
-  const motionPath = "M 110 130 Q 189 80 268 130 Q 347 80 426 130 Q 465 88 505 102 Q 505 200 505 315 Q 552 220 584 130 Q 663 80 742 130 Q 821 80 900 130 Q 821 80 742 130 Q 703 88 663 102 Q 663 200 663 315 Q 615 220 584 130 Q 505 80 426 130 Q 347 80 268 130 Q 189 80 110 130";
+  const motionPath = "M 110 130 Q 189 80 268 130 Q 347 80 426 130 C 466 78 505 150 505 315 C 505 230 558 175 584 130 Q 663 80 742 130 Q 821 80 900 130 Q 821 80 742 130 C 702 78 663 150 663 315 C 663 230 610 175 584 130 Q 505 80 426 130 Q 347 80 268 130 Q 189 80 110 130";
   const principles = [
     {
       n: "01",
@@ -1333,8 +1336,8 @@ function Transitions() {
               <text x="52" y="262" fontFamily="Inter" fontSize="11" fontWeight="800" letterSpacing="2" fill="#6B1F0E" opacity="0.6">THROUGH THE CRACKS</text>
 
               {/* community row (stylized icons) */}
-              {community.map((p) => (
-                <g key={p.label} transform={`translate(${p.x} 130)`}>
+              {community.map((p, i) => (
+                <g key={p.label} className="comm-node" style={{ animationDelay: `${(i % 6) * 1.05}s` }} transform={`translate(${p.x} 130)`}>
                   <circle r="30" fill="#fff" stroke={p.tone} strokeWidth="2.25"/>
                   <g stroke={p.tone} strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
                     {p.icon === "heart" && <path d="M0 7 C-7 1 -11 -4 -6 -9 C-3 -12 0 -9 0 -6 C0 -9 3 -12 6 -9 C11 -4 7 1 0 7 Z"/>}
@@ -1357,13 +1360,17 @@ function Transitions() {
                 </g>
               ))}
 
-              {/* the person — halo + dot hopping along the path */}
-              <circle cx="0" cy="0" r="16" fill="#A8341A" fillOpacity="0.25">
-                <animateMotion dur="16s" repeatCount="indefinite" path={motionPath}/>
-              </circle>
-              <circle cx="0" cy="0" r="9" fill="#6B1F0E" stroke="#fff" strokeWidth="2">
-                <animateMotion dur="16s" repeatCount="indefinite" path={motionPath}/>
-              </circle>
+              {/* the people — each a halo + dot hopping the same path, offset in time */}
+              {["0s", "-5.3s", "-10.6s"].map((begin, i) => (
+                <g key={i}>
+                  <circle cx="0" cy="0" r="16" fill="#A8341A" fillOpacity="0.22">
+                    <animateMotion dur="16s" begin={begin} repeatCount="indefinite" path={motionPath}/>
+                  </circle>
+                  <circle cx="0" cy="0" r="9" fill="#6B1F0E" stroke="#fff" strokeWidth="2">
+                    <animateMotion dur="16s" begin={begin} repeatCount="indefinite" path={motionPath}/>
+                  </circle>
+                </g>
+              ))}
             </svg>
           </div>
           <p className="text-stone-600 text-[14px] leading-relaxed mt-4 max-w-2xl">
