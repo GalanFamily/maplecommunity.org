@@ -24,6 +24,7 @@
     --pink: #D14B6A;
   }
   html { scroll-behavior: smooth; scrollbar-gutter: stable; }
+  html, body { overflow-x: hidden; }
   body {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     background: var(--paper);
@@ -194,7 +195,7 @@ function Nav() {
   }, []);
   return (
     <nav className={`fixed w-full z-50 transition-all ${scrolled ? "bg-white/85 backdrop-blur-md border-b border-stone-200/70 py-3" : "bg-transparent py-5"}`}>
-      <div className="max-w-6xl mx-auto px-6 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         <a href="#top"><Logo size={34}/></a>
         <div className="hidden md:flex items-center gap-7 text-sm font-medium" style={{ color: "var(--ink)" }}>
           <a href="#thesis" className="hover:opacity-70">Thesis</a>
@@ -213,7 +214,7 @@ function Nav() {
 /* ---------- Hero ---------- */
 function Hero() {
   return (
-    <section id="top" className="pt-36 pb-28 px-6 relative overflow-hidden">
+    <section id="top" className="pt-32 pb-24 px-6 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 60% 40% at 50% 0%, rgba(244,201,159,0.45), transparent 70%)" }}></div>
       <FallingLeaves/>
 
@@ -262,8 +263,8 @@ function Hero() {
 /* ---------- Thesis: Community is the answer (bridge to health comes later) ---------- */
 function Thesis() {
   return (
-    <section id="thesis" className="py-24 px-6 relative">
-      <div className="max-w-5xl mx-auto">
+    <section id="thesis" className="py-20 px-6 relative">
+      <div className="max-w-7xl mx-auto">
         {/* Crisis + Surgeon General — side by side on large screens, stacked below */}
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
           <div className="reveal">
@@ -315,8 +316,8 @@ function Thesis() {
 /* ---------- What is community? (the grid) ---------- */
 function WhatIsCommunity() {
   return (
-    <section id="community" className="py-24 px-6 relative" style={{ background: "var(--paper-2)" }}>
-      <div className="max-w-6xl mx-auto">
+    <section id="community" className="py-20 px-6 relative" style={{ background: "var(--paper-2)" }}>
+      <div className="max-w-7xl mx-auto">
         <div className="reveal mb-12 max-w-3xl">
           <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--maple)" }}>What is community?</span>
           <h2 className="font-serif font-bold lowercase mt-5 leading-[0.95] tracking-tight" style={{ color: "var(--ink)", fontSize: "clamp(40px, 6vw, 76px)" }}>
@@ -380,11 +381,11 @@ function WhoWeAre() {
   ];
 
   return (
-    <section id="who" className="py-28 px-6 relative overflow-hidden">
+    <section id="who" className="py-20 px-6 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 45% 55% at 8% 20%, rgba(244,201,159,0.32), transparent 70%)" }}></div>
 
-      <div className="max-w-3xl mx-auto relative">
-        <div className="reveal">
+      <div className="max-w-7xl mx-auto relative">
+        <div className="reveal max-w-3xl">
           <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--maple)" }}>Who we are</span>
           <h2 className="font-serif font-bold lowercase mt-5 leading-[0.95] tracking-tight" style={{ color: "var(--ink)", fontSize: "clamp(40px, 6vw, 76px)" }}>
             a family, <br/>two <span className="italic" style={{ color: "var(--maple)" }}>doctors.</span>
@@ -403,7 +404,7 @@ function WhoWeAre() {
         </div>
 
         {showStory && (
-        <div className="mt-10 relative pl-8">
+        <div className="mt-10 relative pl-8 max-w-3xl">
           <div className="absolute left-[7px] top-2 bottom-2 w-px bg-stone-200"></div>
           <div className="space-y-7">
             {milestones.map((m, i) => (
@@ -424,7 +425,7 @@ function WhoWeAre() {
         <div className="reveal mt-14">
           <div className="text-[10px] font-bold uppercase tracking-[0.28em] mb-5" style={{ color: "var(--maple)" }}>The team</div>
           {/* OPEN: photos to come (ideally each with the maple tree behind them). Confirm Jacob Parkinson's exact title/framework. */}
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               { name: "Megan Galán", creds: "MD, MS", role: "Stanford-trained hospitalist", initials: "MG" },
               { name: "Emilio Galán", creds: "MD, MS", role: "Established the first Community Care Hub in Santa Clara County", initials: "EG" },
@@ -507,12 +508,12 @@ function TheCase() {
   ];
 
   return (
-    <section id="case" className="py-16 px-6 relative" style={{ background: "var(--ink)", color: "#fff" }}>
+    <section id="case" className="py-20 px-6 relative overflow-hidden" style={{ background: "var(--ink)", color: "#fff" }}>
       <div className="absolute -top-24 -right-24 opacity-[0.05] pointer-events-none">
         <MapleLeaf size={420} color="#F4C99F"/>
       </div>
 
-      <div className="max-w-6xl mx-auto relative">
+      <div className="max-w-7xl mx-auto relative">
         <div className="reveal max-w-3xl mb-14">
           <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--amber-soft)" }}>Why now</span>
           <h2 className="font-serif font-bold lowercase mt-5 leading-[0.95] tracking-tight" style={{ fontSize: "clamp(40px, 6vw, 76px)" }}>
@@ -1435,8 +1436,8 @@ function TheWork() {
     },
   ];
   return (
-    <section id="work" className="py-24 px-6 relative">
-      <div className="max-w-6xl mx-auto">
+    <section id="work" className="py-20 px-6 relative">
+      <div className="max-w-7xl mx-auto">
         <div className="reveal mb-10 max-w-3xl">
           <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--maple)" }}>Projects</span>
           <h2 className="font-serif font-bold lowercase mt-5 leading-[0.95] tracking-tight" style={{ color: "var(--ink)", fontSize: "clamp(34px, 5vw, 60px)" }}>
@@ -1475,12 +1476,12 @@ function TheStudy() {
   const resRef = useRef(null);
   const slideRes = (dir) => resRef.current?.scrollBy({ left: dir * 360, behavior: "smooth" });
   return (
-    <section id="study" className="py-32 px-6 relative overflow-hidden" style={{ background: "var(--ink)", color: "#fff" }}>
+    <section id="study" className="py-24 px-6 relative overflow-hidden" style={{ background: "var(--ink)", color: "#fff" }}>
       <div className="absolute -top-32 -left-32 opacity-[0.06] pointer-events-none">
         <MapleLeaf size={520} color="#F4C99F"/>
       </div>
 
-      <div className="max-w-6xl mx-auto relative">
+      <div className="max-w-7xl mx-auto relative">
         <div className="reveal max-w-3xl mb-10">
           <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--amber-soft)" }}>Research &amp; education</span>
           <h2 className="font-serif font-bold lowercase mt-5 leading-[1.0] tracking-tight" style={{ fontSize: "clamp(34px, 5vw, 62px)" }}>
@@ -1601,10 +1602,10 @@ function TheStudy() {
 /* ---------- Why Maple ---------- */
 function WhyMaple() {
   return (
-    <section className="py-28 px-6 relative overflow-hidden">
+    <section className="py-20 px-6 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 50% 60% at 100% 50%, rgba(244,201,159,0.35), transparent 70%)" }}></div>
 
-      <div className="max-w-5xl mx-auto relative">
+      <div className="max-w-7xl mx-auto relative">
         <div className="grid md:grid-cols-[1.3fr_1fr] gap-14 items-center">
           <div className="reveal">
             <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--maple)" }}>Why "Maple"</span>
@@ -1654,12 +1655,12 @@ function WhyMaple() {
 /* ---------- Closing / Contact ---------- */
 function Contact() {
   return (
-    <footer id="contact" className="text-white pt-28 pb-12 px-6 relative overflow-hidden" style={{ background: "var(--ink)" }}>
+    <footer id="contact" className="text-white pt-24 pb-12 px-6 relative overflow-hidden" style={{ background: "var(--ink)" }}>
       <div className="absolute -bottom-20 -right-20 opacity-[0.08] pointer-events-none">
         <MapleLeaf size={460} color="#F4C99F"/>
       </div>
 
-      <div className="max-w-5xl mx-auto relative">
+      <div className="max-w-7xl mx-auto relative">
         <div className="reveal max-w-3xl">
           <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--amber-soft)" }}>Get in touch</span>
           <h2 className="font-serif font-bold lowercase mt-5 leading-[0.95]" style={{ fontSize: "clamp(44px, 7vw, 92px)" }}>
