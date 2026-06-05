@@ -1289,7 +1289,7 @@ function HandoffViz() {
     { x: 900, label: "Friends",   icon: "people", tone: "#A8341A" },
   ];
   const CRACKS = [{ label: "Hospitalization", x: 280 }, { label: "Incarceration", x: 720 }];
-  const ROW_Y = 130, FALL_Y = 268, THRESH = 0.34;
+  const ROW_Y = 155, FALL_Y = 290, THRESH = 0.34;
   const D = { pause: 0.55, hop: 1.2, fall: 1.15, bottom: 1.1, reset: 0.7 };
 
   const [, force] = useState(0);
@@ -1347,12 +1347,12 @@ function HandoffViz() {
 
   return (
     <div className="-mx-2 md:mx-0 overflow-x-auto md:overflow-visible">
-      <svg viewBox="0 0 1000 350" className="block mx-auto h-auto" style={{ minWidth: 720, width: "100%" }} role="img" aria-label="A person hops along a row of community supports; when a connection fades, they fall through into the hospital or jail below.">
-        {/* Big background COMMUNITY label — centered behind the nodes */}
-        <text x="500" y="130" textAnchor="middle" dominantBaseline="middle" fontFamily="Inter" fontSize="118" fontWeight="900" letterSpacing="12" fill="#2B1810" opacity="0.055">COMMUNITY</text>
+      <svg viewBox="0 0 1000 390" className="block mx-auto h-auto" style={{ minWidth: 720, width: "100%" }} role="img" aria-label="A person hops along a row of community supports; when a connection fades, they fall through into the hospital or jail below.">
+        {/* COMMUNITY label — above the nodes */}
+        <text x="500" y="62" textAnchor="middle" dominantBaseline="middle" fontFamily="Inter" fontSize="88" fontWeight="900" letterSpacing="12" fill="#2B1810" opacity="0.07">COMMUNITY</text>
         {/* Separator */}
-        <line x1="40" y1="196" x2="960" y2="196" stroke="#2B1810" strokeOpacity="0.18" strokeWidth="1.5" strokeDasharray="5 8"/>
-        <rect x="40" y="198" width="920" height="148" rx="12" fill="#2B1810" opacity="0.04"/>
+        <line x1="40" y1="218" x2="960" y2="218" stroke="#2B1810" strokeOpacity="0.18" strokeWidth="1.5" strokeDasharray="5 8"/>
+        <rect x="40" y="220" width="920" height="166" rx="12" fill="#2B1810" opacity="0.04"/>
 
         {NODES.map((p, i) => (
           <g key={p.label} transform={`translate(${p.x} ${ROW_Y})`} opacity={fades[i]}>
@@ -1370,7 +1370,7 @@ function HandoffViz() {
         ))}
 
         {CRACKS.map((p) => (
-          <text key={p.label} x={p.x} y="274" textAnchor="middle" dominantBaseline="middle" fontFamily="Fraunces, serif" fontWeight="700" fontSize="38" fill="#2B1810" opacity="0.6">{p.label}</text>
+          <text key={p.label} x={p.x} y="305" textAnchor="middle" dominantBaseline="middle" fontFamily="Fraunces, serif" fontWeight="700" fontSize="38" fill="#2B1810" opacity="0.6">{p.label}</text>
         ))}
 
         <g opacity={dop}>
