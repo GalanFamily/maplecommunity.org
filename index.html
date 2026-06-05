@@ -1235,24 +1235,120 @@ function Partners() {
 }
 
 
+/* ---------- Warm-handoff interactive (JS-driven): one person hops the community row;
+   when a node's connection fades, they fall through into the hospital or jail below. ---------- */
+function HandoffViz() {
+  const NODES = [
+    { x: 110, label: "Family",    icon: "heart",  tone: "#A8341A" },
+    { x: 268, label: "Neighbors", icon: "house",  tone: "#D97706" },
+    { x: 426, label: "Faith",     icon: "faith",  tone: "#C2410C" },
+    { x: 584, label: "Clinic",    icon: "plus",   tone: "#4A6741" },
+    { x: 742, label: "School",    icon: "book",   tone: "#D14B6A" },
+    { x: 900, label: "Friends",   icon: "people", tone: "#A8341A" },
+  ];
+  const CRACKS = [{ label: "Hospital", x: 505 }, { label: "Jail", x: 663 }];
+  const ROW_Y = 120, FALL_Y = 306, THRESH = 0.34;
+  const D = { pause: 0.55, hop: 1.2, fall: 1.15, bottom: 1.1, reset: 0.7 };
+
+  const [, force] = useState(0);
+  const sim = useRef({ mode: "pause", i: 0, next: 1, prog: 0, gapX: 0 });
+  const clk = useRef(0);
+  const fadeRef = useRef(NODES.map(() => 1));
+
+  useEffect(() => {
+    let raf, last = null;
+    const fadeAt = (i, t) => 0.62 + 0.4 * Math.cos(0.8 * t + i * 2.3);
+    const step = (now) => {
+      if (last == null) last = now;
+      const dt = Math.min(0.05, (now - last) / 1000); last = now;
+      clk.current += dt;
+      const t = clk.current;
+      fadeRef.current = NODES.map((_, i) => Math.max(0.16, Math.min(1, fadeAt(i, t))));
+      const s = sim.current;
+      s.prog += dt;
+      if (s.mode === "pause" && s.prog >= D.pause) {
+        const next = s.i + 1;
+        if (next >= NODES.length) { s.mode = "reset"; s.prog = 0; }
+        else if (fadeRef.current[next] < THRESH) { s.mode = "fall"; s.prog = 0; s.next = next; s.gapX = (NODES[s.i].x + NODES[next].x) / 2; }
+        else { s.mode = "hop"; s.prog = 0; s.next = next; }
+      } else if (s.mode === "hop" && s.prog >= D.hop) { s.i = s.next; s.mode = "pause"; s.prog = 0; }
+      else if (s.mode === "fall" && s.prog >= D.fall) { s.mode = "bottom"; s.prog = 0; }
+      else if (s.mode === "bottom" && s.prog >= D.bottom) { s.mode = "reset"; s.prog = 0; }
+      else if (s.mode === "reset" && s.prog >= D.reset) { s.i = 0; s.next = 1; s.mode = "pause"; s.prog = 0; }
+      force((v) => (v + 1) & 1023);
+      raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  const fades = fadeRef.current;
+  const s = sim.current;
+  const easeIn = (u) => u * u;
+  let dx = NODES[0].x, dy = ROW_Y, dop = 1;
+  if (s.mode === "hop") {
+    const u = Math.min(1, s.prog / D.hop);
+    dx = NODES[s.i].x + (NODES[s.next].x - NODES[s.i].x) * u;
+    dy = ROW_Y - 58 * 4 * u * (1 - u);
+  } else if (s.mode === "fall") {
+    const u = Math.min(1, s.prog / D.fall);
+    dx = NODES[s.i].x + (s.gapX - NODES[s.i].x) * Math.min(1, u * 2);
+    const apex = ROW_Y - 34;
+    dy = u < 0.28 ? ROW_Y - (ROW_Y - apex) * (u / 0.28) : apex + (FALL_Y - apex) * easeIn((u - 0.28) / 0.72);
+  } else if (s.mode === "bottom") {
+    dx = s.gapX; dy = FALL_Y;
+  } else if (s.mode === "reset") {
+    dx = NODES[0].x; dy = ROW_Y; dop = Math.min(1, s.prog / D.reset);
+  } else {
+    dx = NODES[s.i].x; dy = ROW_Y;
+  }
+
+  return (
+    <div className="-mx-2 md:mx-0 overflow-x-auto md:overflow-visible">
+      <svg viewBox="0 0 1000 360" className="block mx-auto h-auto" style={{ minWidth: 720, width: "100%" }} role="img" aria-label="A person hops along a row of community supports; when a connection fades, they fall through into the hospital or jail below.">
+        <line x1="40" y1="218" x2="960" y2="218" stroke="#2B1810" strokeOpacity="0.22" strokeWidth="2" strokeDasharray="7 7"/>
+        <rect x="40" y="220" width="920" height="132" rx="14" fill="#2B1810" opacity="0.045"/>
+        <text x="52" y="210" fontFamily="Inter" fontSize="11" fontWeight="800" letterSpacing="2" fill="#2B1810" opacity="0.4">HELD IN COMMUNITY</text>
+        <text x="52" y="245" fontFamily="Inter" fontSize="11" fontWeight="800" letterSpacing="2" fill="#6B1F0E" opacity="0.55">THROUGH THE CRACKS</text>
+
+        {NODES.slice(0, -1).map((p, i) => (
+          <line key={i} x1={p.x + 30} y1={ROW_Y} x2={NODES[i + 1].x - 30} y2={ROW_Y} stroke="#A8341A" strokeWidth="2.5" strokeDasharray="2 8" strokeLinecap="round" opacity={0.65 * Math.min(fades[i], fades[i + 1])}/>
+        ))}
+
+        {NODES.map((p, i) => (
+          <g key={p.label} transform={`translate(${p.x} ${ROW_Y})`} opacity={fades[i]}>
+            <circle r="30" fill="#fff" stroke={p.tone} strokeWidth="2.25"/>
+            <g stroke={p.tone} strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+              {p.icon === "heart" && <path d="M0 7 C-7 1 -11 -4 -6 -9 C-3 -12 0 -9 0 -6 C0 -9 3 -12 6 -9 C11 -4 7 1 0 7 Z"/>}
+              {p.icon === "house" && <g><path d="M-9 9 V-1 L0 -9 L9 -1 V9 Z"/><path d="M-3 9 V2 H3 V9"/></g>}
+              {p.icon === "faith" && <g><path d="M-9 9 V-2 L0 -9 L9 -2 V9 Z"/><path d="M0 -9 V-14 M-2.5 -11.5 H2.5"/></g>}
+              {p.icon === "plus" && <path d="M0 -9 V9 M-9 0 H9"/>}
+              {p.icon === "book" && <g><path d="M0 -7 V8"/><path d="M0 -7 Q-5 -9 -9 -7 V7 Q-5 6 0 8"/><path d="M0 -7 Q5 -9 9 -7 V7 Q5 6 0 8"/></g>}
+              {p.icon === "people" && <g><circle cx="-4.5" cy="-3" r="3"/><circle cx="4.5" cy="-3" r="3"/><path d="M-10 9 Q-10 2 -4.5 2 M10 9 Q10 2 4.5 2"/></g>}
+            </g>
+            <text textAnchor="middle" y="52" fontFamily="Fraunces, serif" fontWeight="600" fontSize="16" fill="#2B1810">{p.label}</text>
+          </g>
+        ))}
+
+        {CRACKS.map((p) => (
+          <g key={p.label} transform={`translate(${p.x} 300)`}>
+            <circle r="22" fill="#2B1810"/>
+            <circle r="5" fill="#F4C99F" fillOpacity="0.7"/>
+            <text textAnchor="middle" y="42" fontFamily="Fraunces, serif" fontWeight="600" fontSize="14" fill="#6B1F0E">{p.label}</text>
+          </g>
+        ))}
+
+        <g opacity={dop}>
+          <circle cx={dx} cy={dy} r="15" fill="#A8341A" fillOpacity="0.22"/>
+          <circle cx={dx} cy={dy} r="9" fill="#6B1F0E" stroke="#fff" strokeWidth="2"/>
+        </g>
+      </svg>
+    </div>
+  );
+}
+
 /* ---------- Transitions to the Community ---------- */
 function Transitions() {
-  // A person hops along a row of community supports; where there's a gap, they fall
-  // through into the hospital or jail below. Warm handoffs close the gaps.
-  const community = [
-    { label: "Family",    x: 110, icon: "heart",  tone: "#A8341A" },
-    { label: "Neighbors", x: 268, icon: "house",  tone: "#D97706" },
-    { label: "Faith",     x: 426, icon: "faith",  tone: "#C2410C" },
-    { label: "Clinic",    x: 584, icon: "plus",   tone: "#4A6741" },
-    { label: "School",    x: 742, icon: "book",   tone: "#D14B6A" },
-    { label: "Friends",   x: 900, icon: "people", tone: "#A8341A" },
-  ];
-  const cracks = [
-    { label: "Hospital", x: 505, tone: "#6B1F0E" },
-    { label: "Jail",     x: 663, tone: "#2B1810" },
-  ];
-  // Hops (arc up) between adjacent dots; two falls per loop into the gaps (hospital, jail).
-  const motionPath = "M 110 130 Q 189 80 268 130 Q 347 80 426 130 C 466 78 505 150 505 315 C 505 230 558 175 584 130 Q 663 80 742 130 Q 821 80 900 130 Q 821 80 742 130 C 702 78 663 150 663 315 C 663 230 610 175 584 130 Q 505 80 426 130 Q 347 80 268 130 Q 189 80 110 130";
   const principles = [
     {
       n: "01",
@@ -1327,52 +1423,7 @@ function Transitions() {
 
         {/* Interactive — a person hops along the community row and falls into the gaps */}
         <div className="reveal rounded-[32px] border border-stone-200 bg-white p-5 md:p-8 mb-12 grain">
-          <div className="-mx-2 md:mx-0 overflow-x-auto md:overflow-visible">
-            <svg viewBox="0 0 1000 390" className="block mx-auto h-auto" style={{ minWidth: 720, width: "100%" }} role="img" aria-label="A person hops along a row of community supports; where there is a gap, they fall through into the hospital or jail below.">
-              {/* the line + the place below it */}
-              <line x1="40" y1="235" x2="960" y2="235" stroke="#2B1810" strokeOpacity="0.22" strokeWidth="2" strokeDasharray="7 7"/>
-              <rect x="40" y="237" width="920" height="140" rx="14" fill="#2B1810" opacity="0.045"/>
-              <text x="52" y="227" fontFamily="Inter" fontSize="11" fontWeight="800" letterSpacing="2" fill="#2B1810" opacity="0.4">HELD IN COMMUNITY</text>
-              <text x="52" y="262" fontFamily="Inter" fontSize="11" fontWeight="800" letterSpacing="2" fill="#6B1F0E" opacity="0.6">THROUGH THE CRACKS</text>
-
-              {/* community row (stylized icons) */}
-              {community.map((p, i) => (
-                <g key={p.label} className="comm-node" style={{ animationDelay: `${(i % 6) * 1.05}s` }} transform={`translate(${p.x} 130)`}>
-                  <circle r="30" fill="#fff" stroke={p.tone} strokeWidth="2.25"/>
-                  <g stroke={p.tone} strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                    {p.icon === "heart" && <path d="M0 7 C-7 1 -11 -4 -6 -9 C-3 -12 0 -9 0 -6 C0 -9 3 -12 6 -9 C11 -4 7 1 0 7 Z"/>}
-                    {p.icon === "house" && <g><path d="M-9 9 V-1 L0 -9 L9 -1 V9 Z"/><path d="M-3 9 V2 H3 V9"/></g>}
-                    {p.icon === "faith" && <g><path d="M-9 9 V-2 L0 -9 L9 -2 V9 Z"/><path d="M0 -9 V-14 M-2.5 -11.5 H2.5"/></g>}
-                    {p.icon === "plus" && <path d="M0 -9 V9 M-9 0 H9"/>}
-                    {p.icon === "book" && <g><path d="M0 -7 V8"/><path d="M0 -7 Q-5 -9 -9 -7 V7 Q-5 6 0 8"/><path d="M0 -7 Q5 -9 9 -7 V7 Q5 6 0 8"/></g>}
-                    {p.icon === "people" && <g><circle cx="-4.5" cy="-3" r="3"/><circle cx="4.5" cy="-3" r="3"/><path d="M-10 9 Q-10 2 -4.5 2 M10 9 Q10 2 4.5 2"/></g>}
-                  </g>
-                  <text textAnchor="middle" y="52" fontFamily="Fraunces, serif" fontWeight="600" fontSize="16" fill="#2B1810">{p.label}</text>
-                </g>
-              ))}
-
-              {/* the gaps below — hospital & jail */}
-              {cracks.map((p) => (
-                <g key={p.label} transform={`translate(${p.x} 315)`}>
-                  <circle r="28" fill="#2B1810" stroke={p.tone} strokeWidth="2.25"/>
-                  <circle r="6" fill="#F4C99F" fillOpacity="0.7"/>
-                  <text textAnchor="middle" y="48" fontFamily="Fraunces, serif" fontWeight="600" fontSize="15" fill="#6B1F0E">{p.label}</text>
-                </g>
-              ))}
-
-              {/* the people — each a halo + dot hopping the same path, offset in time */}
-              {["0s", "-5.3s", "-10.6s"].map((begin, i) => (
-                <g key={i}>
-                  <circle cx="0" cy="0" r="16" fill="#A8341A" fillOpacity="0.22">
-                    <animateMotion dur="16s" begin={begin} repeatCount="indefinite" path={motionPath}/>
-                  </circle>
-                  <circle cx="0" cy="0" r="9" fill="#6B1F0E" stroke="#fff" strokeWidth="2">
-                    <animateMotion dur="16s" begin={begin} repeatCount="indefinite" path={motionPath}/>
-                  </circle>
-                </g>
-              ))}
-            </svg>
-          </div>
+          <HandoffViz/>
           <p className="text-stone-600 text-[14px] leading-relaxed mt-4 max-w-2xl">
             Watch one person move. They hop from one part of their community to the next — until there's a gap, with no one to catch them, and they fall through into the hospital or jail. <strong style={{ color: "var(--ink)" }}>Warm handoffs close the gaps.</strong>
           </p>
