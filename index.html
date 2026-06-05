@@ -340,17 +340,13 @@ function WhatIsCommunity() {
           <p className="mt-7 text-lg text-stone-700 leading-relaxed font-medium">
             It's where, and who, you spend your time with — and it looks totally different for different people. It's not one institution. It's the overlapping mesh of people and places that catch you when you fall, and notice when you don't show up. A family who picks up the phone. A neighbor next door. Anyone who notices — <span className="italic" style={{ color: "var(--maple)" }}>a friend, a colleague, a community health worker, a case manager</span> — the people we interact with regularly, whoever they may be.
           </p>
-          <p className="mt-5 text-lg text-stone-700 leading-relaxed font-medium">
-            Gaps in community lead to the most expensive and least humane places we have. When we strengthen community and avoid those high-cost settings, those savings can be used to further fund communities — creating a cycle of healthy community.
-          </p>
-
         </div>
 
         {/* Interactive — dot falls through the cracks */}
         <div className="reveal rounded-[32px] border border-stone-200 bg-white p-5 md:p-8 grain">
           <HandoffViz/>
-          <p className="text-stone-600 text-[14px] leading-relaxed mt-4 max-w-2xl">
-            Watch one person move through their community. When the connections around them fade, there's nothing to catch them — and they fall through into a hospital or jail.
+          <p className="text-stone-600 text-[15px] leading-relaxed mt-3 max-w-2xl">
+            Gaps in community lead to the most <strong style={{ color: "var(--ink)" }}>expensive and least humane</strong> places we have. When we strengthen community and avoid those high-cost settings, those savings can be used to further fund communities — creating a cycle of healthy community.
           </p>
         </div>
 
@@ -1285,8 +1281,8 @@ function HandoffViz() {
     { x: 742, label: "School",    icon: "book",   tone: "#D14B6A" },
     { x: 900, label: "Friends",   icon: "people", tone: "#A8341A" },
   ];
-  const CRACKS = [{ label: "Hospital", x: 505 }, { label: "Jail", x: 663 }];
-  const ROW_Y = 120, FALL_Y = 306, THRESH = 0.34;
+  const CRACKS = [{ label: "Hospital", x: 320 }, { label: "Jail", x: 680 }];
+  const ROW_Y = 120, FALL_Y = 270, THRESH = 0.34;
   const D = { pause: 0.55, hop: 1.2, fall: 1.15, bottom: 1.1, reset: 0.7 };
 
   const [, force] = useState(0);
@@ -1344,11 +1340,12 @@ function HandoffViz() {
 
   return (
     <div className="-mx-2 md:mx-0 overflow-x-auto md:overflow-visible">
-      <svg viewBox="0 0 1000 360" className="block mx-auto h-auto" style={{ minWidth: 720, width: "100%" }} role="img" aria-label="A person hops along a row of community supports; when a connection fades, they fall through into the hospital or jail below.">
-        <line x1="40" y1="218" x2="960" y2="218" stroke="#2B1810" strokeOpacity="0.22" strokeWidth="2" strokeDasharray="7 7"/>
-        <rect x="40" y="220" width="920" height="132" rx="14" fill="#2B1810" opacity="0.045"/>
-        <text x="52" y="210" fontFamily="Inter" fontSize="11" fontWeight="800" letterSpacing="2" fill="#2B1810" opacity="0.4">HELD IN COMMUNITY</text>
-        <text x="52" y="245" fontFamily="Inter" fontSize="11" fontWeight="800" letterSpacing="2" fill="#6B1F0E" opacity="0.55">THROUGH THE CRACKS</text>
+      <svg viewBox="0 0 1000 350" className="block mx-auto h-auto" style={{ minWidth: 720, width: "100%" }} role="img" aria-label="A person hops along a row of community supports; when a connection fades, they fall through into the hospital or jail below.">
+        {/* Big background COMMUNITY label */}
+        <text x="500" y="88" textAnchor="middle" fontFamily="Inter" fontSize="72" fontWeight="900" letterSpacing="10" fill="#2B1810" opacity="0.055">COMMUNITY</text>
+        {/* Separator */}
+        <line x1="40" y1="190" x2="960" y2="190" stroke="#2B1810" strokeOpacity="0.18" strokeWidth="1.5" strokeDasharray="5 8"/>
+        <rect x="40" y="192" width="920" height="144" rx="12" fill="#2B1810" opacity="0.04"/>
 
         {NODES.slice(0, -1).map((p, i) => (
           <line key={i} x1={p.x + 30} y1={ROW_Y} x2={NODES[i + 1].x - 30} y2={ROW_Y} stroke="#A8341A" strokeWidth="2.5" strokeDasharray="2 8" strokeLinecap="round" opacity={0.65 * Math.min(fades[i], fades[i + 1])}/>
@@ -1370,11 +1367,7 @@ function HandoffViz() {
         ))}
 
         {CRACKS.map((p) => (
-          <g key={p.label} transform={`translate(${p.x} 300)`}>
-            <circle r="22" fill="#2B1810"/>
-            <circle r="5" fill="#F4C99F" fillOpacity="0.7"/>
-            <text textAnchor="middle" y="42" fontFamily="Fraunces, serif" fontWeight="600" fontSize="14" fill="#6B1F0E">{p.label}</text>
-          </g>
+          <text key={p.label} x={p.x} y="318" textAnchor="middle" fontFamily="Fraunces, serif" fontWeight="700" fontSize="38" fill="#2B1810" opacity="0.6">{p.label}</text>
         ))}
 
         <g opacity={dop}>
