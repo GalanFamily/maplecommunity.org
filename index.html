@@ -1459,7 +1459,7 @@ function TheWork() {
               We host programs for our community.
             </h3>
             <p className="mt-4 text-stone-600 text-[15px] leading-relaxed">
-              Simple, consistent gatherings that give neighbors a reason to show up — and keep showing up. Including community dinners, support groups, health education, blood pressure drives, and of course <span className="italic font-semibold" style={{ color: "var(--maple)" }}>Flamingo Fridays</span>.
+              Simple, consistent gatherings that give neighbors a reason to show up — and keep showing up. Including community dinners, support groups, health education, blood pressure drives, and of course Flamingo Fridays.
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -1467,13 +1467,14 @@ function TheWork() {
               <span key={i} className="px-3 py-1.5 rounded-full text-[12px] font-semibold border border-stone-200 text-stone-600">{t}</span>
             ))}
           </div>
-          <div className="flex items-center gap-3 pt-5 border-t border-stone-100">
-            <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0" style={{ background: "var(--paper-2)" }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--moss)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-            </div>
-            <div>
-              <div className="text-[13px] font-semibold" style={{ color: "var(--ink)" }}>Featured by Weave — The Social Fabric Project</div>
-              <div className="text-[11px] text-stone-400 mt-0.5">The Aspen Institute</div>
+          <div className="mt-2 pt-5 border-t border-stone-100">
+            <div className="text-[10px] font-bold uppercase tracking-[0.22em] text-stone-400 mb-3">Featured by</div>
+            <div className="flex items-center gap-4">
+              <img src="https://logo.clearbit.com/aspeninstitute.org" alt="The Aspen Institute" className="w-8 h-8 rounded-lg object-contain" style={{ background: "var(--paper)" }} onError={(e) => { e.target.style.display='none'; }}/>
+              <div>
+                <div className="font-semibold text-[15px] leading-tight" style={{ color: "var(--ink)" }}>Weave — The Social Fabric Project</div>
+                <div className="text-[12px] text-stone-400 mt-0.5">An initiative of The Aspen Institute</div>
+              </div>
             </div>
           </div>
         </div>
