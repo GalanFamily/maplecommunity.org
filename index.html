@@ -4,6 +4,8 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Maple — Community is the answer.</title>
+<link rel="icon" type="image/png" href="assets/maple-icon.png">
+<link rel="apple-touch-icon" href="assets/maple-icon.png">
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1349,58 +1351,6 @@ function HandoffViz() {
 
 /* ---------- Transitions to the Community ---------- */
 function Transitions() {
-  const principles = [
-    {
-      n: "01",
-      title: "Notice early.",
-      body: "Before the discharge date, before the release date, before the crisis ends — we identify the moment of transition and start preparing the community to receive.",
-      icon: (
-        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7">
-          <circle cx="20" cy="20" r="3"/>
-          <path d="M20 4v4M20 32v4M4 20h4M32 20h4M8 8l3 3M29 29l3 3M8 32l3-3M29 11l3-3"/>
-        </svg>
-      ),
-    },
-    {
-      n: "02",
-      title: "Make it warm.",
-      body: "No cold drop-offs. No pamphlets. Every handoff is a real human introduction — a coach, a pastor, an aunt, a neighbor — by name, before the door closes behind them.",
-      icon: (
-        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7">
-          <path d="M12 22c0-3 2-5 5-5h6c3 0 5 2 5 5v8H12v-8z"/>
-          <circle cx="20" cy="11" r="4"/>
-          <path d="M6 30c1-4 4-6 7-6M34 30c-1-4-4-6-7-6"/>
-        </svg>
-      ),
-    },
-    {
-      n: "03",
-      title: "Tell the community.",
-      body: "We let the people already in someone's life know what's happening, what's needed, and how to help. Discretion always. Isolation, never.",
-      icon: (
-        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7">
-          <path d="M8 14h20l-4 6 4 6H8z"/>
-          <path d="M8 8v24"/>
-        </svg>
-      ),
-    },
-    {
-      n: "04",
-      title: "Spread the load.",
-      body: "One person can't catch a fall. A web can. We distribute support across many touch points — meals, rides, calls, prayers, paperwork — so no one carries the weight alone.",
-      icon: (
-        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7">
-          <circle cx="20" cy="20" r="3"/>
-          <circle cx="8"  cy="10" r="2.5"/>
-          <circle cx="32" cy="10" r="2.5"/>
-          <circle cx="8"  cy="30" r="2.5"/>
-          <circle cx="32" cy="30" r="2.5"/>
-          <path d="M20 20L8 10M20 20l12-10M20 20L8 30M20 20l12 10"/>
-        </svg>
-      ),
-    },
-  ];
-
   return (
     <section id="transitions" className="py-28 px-6 relative" style={{ background: "var(--paper-2)" }}>
       <div className="max-w-6xl mx-auto">
@@ -1410,14 +1360,7 @@ function Transitions() {
             from hospital or jail, <br/>back to <span className="italic" style={{ color: "var(--maple)" }}>community.</span>
           </h2>
           <p className="mt-7 text-lg text-stone-700 leading-relaxed font-medium">
-            The most dangerous moment isn't the diagnosis or the sentence. It's the day you walk out. The threshold between an institution and the rest of your life. We treat every one of those thresholds as a <strong style={{ color: "var(--ink)" }}>warm handoff</strong>.
-          </p>
-        </div>
-
-        {/* Thesis above the interactive */}
-        <div className="reveal mb-8 max-w-3xl rounded-3xl p-8 md:p-10" style={{ background: "var(--ink)", color: "#fff" }}>
-          <p className="font-serif leading-[1.18]" style={{ fontSize: "clamp(22px, 3vw, 34px)" }}>
-            Send someone back to the community from the hospital or jail — but with <span className="italic" style={{ color: "var(--amber-soft)" }}>no community there</span> — and they come back. A warm handoff only works if someone is waiting to receive it.
+            The most dangerous moment isn't the diagnosis or the sentence. It's the day you walk out. The transition from institution to community. <strong style={{ color: "var(--ink)" }}>Without community there, they come back.</strong>
           </p>
         </div>
 
@@ -1429,20 +1372,6 @@ function Transitions() {
           </p>
         </div>
 
-        {/* Four principles */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {principles.map((p, i) => (
-            <div key={i} className="reveal rounded-2xl bg-white border border-stone-200 p-7 lift" style={{ transitionDelay: `${i*60}ms` }}>
-              <div className="flex items-center justify-between mb-5">
-                <span className="text-[10px] font-black uppercase tracking-[0.24em]" style={{ color: "var(--maple-deep)" }}>{p.n}</span>
-                <span style={{ color: "var(--maple)" }}>{p.icon}</span>
-              </div>
-              <h3 className="font-serif font-bold lowercase text-2xl leading-tight mb-3" style={{ color: "var(--ink)" }}>{p.title}</h3>
-              <p className="text-stone-600 text-[14px] leading-relaxed">{p.body}</p>
-            </div>
-          ))}
-        </div>
-
         {/* The question that leads to the call to connect */}
         <div className="reveal mt-10 max-w-3xl">
           <p className="font-serif leading-[1.15]" style={{ fontSize: "clamp(22px, 3vw, 34px)", color: "var(--ink)" }}>
@@ -1451,14 +1380,6 @@ function Transitions() {
           <p className="text-stone-600 text-[15px] leading-relaxed mt-3">Almost always, it's a web. If you're part of someone's web — a family member, a sponsor, a neighbor, a clinician — we want to know you.</p>
         </div>
 
-        {/* Bottom strip: who can help */}
-        <div className="reveal mt-8 rounded-2xl border border-stone-200 bg-white p-7 flex flex-wrap items-center gap-6 justify-between">
-          <div>
-            <div className="font-serif font-bold lowercase text-xl" style={{ color: "var(--ink)" }}>are you part of someone's community?</div>
-            <div className="text-stone-600 text-[14px] mt-1">A family member, a sponsor, a neighbor, a clinician — tell us. We'll connect.</div>
-          </div>
-          <a href="mailto:hello@maplefund.org?subject=Warm%20handoff" className="text-white px-6 py-3 rounded-full font-semibold text-sm" style={{ background: "var(--maple-deep)" }}>Get in the loop</a>
-        </div>
       </div>
     </section>
   );
