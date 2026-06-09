@@ -401,7 +401,7 @@ function TheCase() {
   );
 }
 
-/* ---------- Warm community scene illustration (echoes poster bottom) ---------- */
+/* ---------- Community scene illustration ---------- */
 const CommunityScene = () => (
   <svg viewBox="0 0 1000 340" width="100%" height="auto" aria-hidden="true" style={{ display: "block" }}>
     <defs>
@@ -524,7 +524,7 @@ const CommunityScene = () => (
   </svg>
 );
 
-/* ---------- Community Health Work — the big section ---------- */
+/* ---------- Community Health Work section — poster layout ---------- */
 function CHWSection() {
   const actions = [
     {
@@ -554,128 +554,123 @@ function CHWSection() {
   ];
 
   return (
-    <section id="chw" className="relative overflow-hidden" style={{ background: "var(--paper-2)" }}>
-      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 55% 40% at 85% 15%, rgba(244,201,159,0.4), transparent 65%)" }}></div>
+    <section id="chw" className="relative" style={{ background: "var(--paper-2)" }}>
+      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 55% 50% at 90% 5%, rgba(244,201,159,0.55), transparent 60%)" }}></div>
 
-      <div className="max-w-7xl mx-auto px-6 pt-20 pb-16 relative">
+      {/* ── Part 1: poster editorial spread ───────────────────────── */}
+      <div className="max-w-7xl mx-auto px-6 pt-24 pb-20 relative">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-start reveal">
 
-        {/* Top grid: community text left + poster CHW card right */}
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-14 items-start reveal mb-0">
-
-          {/* Left: community is where and who */}
+          {/* LEFT: stacked type + description — sits directly on the page */}
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--maple)" }}>Community &amp; connection</span>
-            <h2 className="font-serif font-bold lowercase mt-5 leading-[0.95] tracking-tight" style={{ color: "var(--ink)", fontSize: "clamp(38px, 5.5vw, 72px)" }}>
-              community is <span className="italic" style={{ color: "var(--maple)" }}>where and who.</span>
-            </h2>
-            <p className="mt-6 text-lg text-stone-700 leading-relaxed font-medium">
-              It's where, and who, you spend your time with. The overlapping mesh of people and places that catch you when you fall — a family who picks up the phone, a neighbor next door, a community health worker, a case manager. Anyone who notices when you don't show up.
+            <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--maple)" }}>What closes the gap</span>
+
+            {/* Big stacked poster type — no card, just page */}
+            <div className="mt-5" style={{ lineHeight: 0.93, letterSpacing: "-0.03em" }}>
+              <div style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 800, fontSize: "clamp(52px, 8vw, 96px)", color: "var(--ink)" }}>Community</div>
+              <div style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 800, fontSize: "clamp(52px, 8vw, 96px)", color: "var(--maple)" }}>Health</div>
+              <div style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 800, fontSize: "clamp(52px, 8vw, 96px)", color: "var(--moss)" }}>Work</div>
+            </div>
+
+            {/* Maple accent rule */}
+            <div style={{ width: 40, height: 3, background: "var(--maple)", borderRadius: 2, marginTop: 20, marginBottom: 20 }}></div>
+
+            <p className="font-bold leading-snug" style={{ fontSize: "16px", color: "var(--ink)" }}>
+              A bridge between formal medical and social settings and the community.
             </p>
-            <p className="mt-5 text-[17px] text-stone-600 leading-relaxed font-medium border-l-2 pl-4" style={{ borderColor: "var(--maple)" }}>
+            <p className="mt-4 leading-relaxed" style={{ fontSize: "15px", color: "#57534e" }}>
+              Community health workers are trusted members of the community who often share the same language, culture, or lived experience as the people they serve — opening doors that clinical staff often can't.
+            </p>
+            <p className="mt-4 leading-relaxed" style={{ fontSize: "13.5px", color: "#78716c" }}>
+              Health plans and states are increasingly building pathways to recognize and reimburse this work — linked to <strong style={{ color: "var(--ink)" }}>better outcomes, lower avoidable hospital use, and strong return on investment.</strong>
+            </p>
+          </div>
+
+          {/* RIGHT: 4 actions — sit directly on the page, no container */}
+          <div style={{ paddingTop: "clamp(0px, 2vw, 20px)" }}>
+            {actions.map((a, i) => (
+              <React.Fragment key={i}>
+                {i > 0 && <div style={{ height: "1px", background: "rgba(43,24,16,0.1)" }}></div>}
+                <div className="flex items-start gap-5 py-6">
+                  <div className="shrink-0 flex items-center justify-center rounded-full" style={{ width: 52, height: 52, background: a.color }}>
+                    <span style={{ color: "#fff", display: "flex" }}>{a.icon}</span>
+                  </div>
+                  <div className="pt-1">
+                    <div style={{ fontWeight: 700, fontSize: "16px", color: a.color, lineHeight: 1.2 }}>{a.title}</div>
+                    <div style={{ fontSize: "14px", color: "#78716c", marginTop: 4, lineHeight: 1.5 }}>{a.body}</div>
+                  </div>
+                </div>
+              </React.Fragment>
+            ))}
+          </div>
+        </div>
+
+        {/* ── Part 2: community context + Surgeon General ─────────── */}
+        <div className="reveal mt-16 pt-14 border-t border-stone-300/50 grid md:grid-cols-2 gap-12 items-start">
+
+          {/* Community is where and who */}
+          <div>
+            <h3 className="font-serif font-bold lowercase leading-tight" style={{ color: "var(--ink)", fontSize: "clamp(28px, 4vw, 44px)" }}>
+              community is <span className="italic" style={{ color: "var(--maple)" }}>where and who.</span>
+            </h3>
+            <p className="mt-5 leading-relaxed font-medium" style={{ fontSize: "16px", color: "#44403c" }}>
+              It's where, and who, you spend your time with. The overlapping mesh of people and places that catch you when you fall — a family who picks up the phone, a neighbor next door, a community health worker. Anyone who notices when you don't show up.
+            </p>
+            <p className="mt-4 leading-relaxed font-medium pl-4" style={{ fontSize: "16px", color: "#57534e", borderLeft: "2px solid var(--maple)" }}>
               Gaps in community lead to the most <strong style={{ color: "var(--ink)" }}>expensive and least humane</strong> places we have — hospitals and jails.
             </p>
-
-            {/* Surgeon General pull */}
-            <div className="mt-8 rounded-2xl border bg-white p-5" style={{ borderColor: "rgba(217,119,6,0.3)" }}>
-              <div className="text-[10px] font-bold uppercase tracking-[0.22em] mb-2" style={{ color: "var(--maple-deep)" }}>U.S. Surgeon General · 2023</div>
-              <p className="text-[14px] leading-relaxed text-stone-700">Declared loneliness and isolation a national epidemic — as deadly as smoking up to <strong style={{ color: "var(--ink)" }}>15 cigarettes a day</strong> and linked to higher rates of heart disease, stroke, and dementia.</p>
-              <a href="https://www.hhs.gov/sites/default/files/surgeon-general-social-connection-advisory.pdf" target="_blank" rel="noopener" className="mt-3 inline-flex items-center gap-1.5 text-[12.5px] font-semibold underline-grow" style={{ color: "var(--maple-deep)" }}>
-                Read the advisory
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
-              </a>
-            </div>
           </div>
 
-          {/* Right: poster-style CHW card */}
-          <div className="rounded-3xl border border-stone-200 bg-white overflow-hidden">
-            {/* Poster-style header: big stacked colored type */}
-            <div className="px-8 pt-9 pb-5">
-              <div style={{ lineHeight: 1.0, letterSpacing: "-0.025em" }}>
-                <div className="font-bold uppercase" style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: "clamp(40px, 5.5vw, 66px)", color: "var(--ink)", fontWeight: 800 }}>Community</div>
-                <div className="font-bold uppercase" style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: "clamp(40px, 5.5vw, 66px)", color: "var(--maple)", fontWeight: 800 }}>Health</div>
-                <div className="font-bold uppercase" style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: "clamp(40px, 5.5vw, 66px)", color: "var(--moss)", fontWeight: 800 }}>Work</div>
+          {/* Surgeon General — blockquote style, no card */}
+          <div>
+            <div className="text-[10px] font-bold uppercase tracking-[0.22em] mb-4" style={{ color: "var(--maple-deep)" }}>U.S. Surgeon General · 2023</div>
+            <p className="leading-relaxed font-serif italic" style={{ fontSize: "clamp(18px, 2.4vw, 24px)", color: "var(--ink)" }}>
+              "Loneliness and isolation are a national epidemic — as deadly as smoking up to 15 cigarettes a day."
+            </p>
+            <p className="mt-4 leading-relaxed" style={{ fontSize: "14px", color: "#78716c" }}>
+              Linked to higher rates of heart disease, stroke, and dementia. <a href="https://www.hhs.gov/sites/default/files/surgeon-general-social-connection-advisory.pdf" target="_blank" rel="noopener" className="underline-grow font-semibold" style={{ color: "var(--maple-deep)" }}>Read the advisory →</a>
+            </p>
+
+            {/* Our purpose */}
+            <div className="mt-8 pt-8 border-t border-stone-300/50">
+              <div className="text-[10px] font-bold uppercase tracking-[0.28em] mb-3" style={{ color: "var(--maple)" }}>Our Purpose</div>
+              <p className="leading-relaxed font-medium" style={{ fontSize: "15px", color: "#44403c" }}>
+                If community were a pill, every doctor would prescribe it. <strong style={{ color: "var(--ink)" }}>Maple is a nonprofit Community Care Hub led by two doctors on a mission to make that a reality.</strong>
+              </p>
+              <p className="mt-2" style={{ fontSize: "13px", color: "#78716c" }}>Our goal: 70% of every dollar goes to community programs and organizations supporting underserved populations.</p>
+              <div className="flex flex-wrap gap-2 mt-4">
+                <a href="https://youtu.be/2tBJ9Oknezg" target="_blank" rel="noopener" className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border border-stone-300 bg-white/80 text-[12px] font-semibold lift" style={{ color: "var(--maple-deep)" }}>DHCS <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+                <a href="https://www.chcf.org/wp-content/uploads/2024/10/ExploringEmergingMediCalCommunityCareHubs2024.pdf" target="_blank" rel="noopener" className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border border-stone-300 bg-white/80 text-[12px] font-semibold lift" style={{ color: "var(--maple-deep)" }}>CHCF <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+                <a href="https://aspe.hhs.gov/reports/community-care-hubs" target="_blank" rel="noopener" className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border border-stone-300 bg-white/80 text-[12px] font-semibold lift" style={{ color: "var(--maple-deep)" }}>HHS <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
               </div>
-              {/* Red accent rule */}
-              <div style={{ width: 40, height: 3, background: "var(--maple)", borderRadius: 2, marginTop: 14, marginBottom: 14 }}></div>
-              <p className="font-bold text-stone-800 leading-snug" style={{ fontSize: "15.5px" }}>
-                A bridge between formal medical<br/>and social settings and the community.
-              </p>
-              <p className="mt-3 text-stone-500 leading-relaxed" style={{ fontSize: "13.5px" }}>
-                Community health workers are trusted members of the community who often share the same language, culture, or lived experience — opening doors that clinical staff often can't.
-              </p>
-            </div>
-
-            {/* 4 actions — circular badge icons + dotted separators */}
-            <div className="px-8 pb-7 pt-2">
-              {actions.map((a, i) => (
-                <React.Fragment key={i}>
-                  {i > 0 && <div style={{ borderTop: "1.5px dashed rgba(43,24,16,0.12)", margin: "0 0" }}></div>}
-                  <div className="flex gap-4 items-center py-4">
-                    {/* Circular badge */}
-                    <div className="shrink-0 flex items-center justify-center rounded-full" style={{ width: 48, height: 48, background: a.color }}>
-                      <span style={{ color: "#fff", display: "flex" }}>{a.icon}</span>
-                    </div>
-                    <div>
-                      <div className="font-bold leading-tight" style={{ fontSize: "15px", color: a.color }}>{a.title}</div>
-                      <div className="text-stone-500 leading-snug mt-0.5" style={{ fontSize: "13px" }}>{a.body}</div>
-                    </div>
-                  </div>
-                </React.Fragment>
-              ))}
-            </div>
-
-            {/* Bottom note */}
-            <div className="px-8 py-4 border-t border-stone-100" style={{ background: "var(--paper-2)" }}>
-              <p className="text-[13px] leading-relaxed text-stone-500">Health plans and states are increasingly building pathways to recognize and reimburse this work — linked to <strong style={{ color: "var(--ink)" }}>better outcomes, lower avoidable hospital use, and strong return on investment.</strong></p>
             </div>
           </div>
-
         </div>
       </div>
 
-      {/* Warm illustrated community scene — echoes the poster */}
-      <div className="w-full overflow-hidden" style={{ marginTop: "-2px" }}>
+      {/* ── Part 3: warm illustrated scene — flush, no card ───────── */}
+      <div style={{ background: "var(--paper-2)", lineHeight: 0 }}>
         <CommunityScene/>
       </div>
 
-      {/* Footer strip echoing poster: logo | We all need community. | tagline items with samaras */}
-      <div className="border-t border-stone-300/60" style={{ background: "var(--paper)" }}>
-        <div className="max-w-7xl mx-auto px-6 py-5">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-5">
-              <Logo size={28}/>
-              <div className="w-px h-6 bg-stone-300" aria-hidden="true"></div>
-              <span className="font-serif font-bold lowercase text-xl" style={{ color: "var(--ink)" }}>We all need <span style={{ color: "var(--maple)" }}>community.</span></span>
+      {/* ── Part 4: poster lockup strip ───────────────────────────── */}
+      <div style={{ background: "var(--paper)", borderTop: "1px solid rgba(43,24,16,0.1)" }}>
+        <div className="max-w-7xl mx-auto px-6 py-6">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-5">
+            <div className="flex items-center gap-4">
+              <Logo size={26}/>
+              <div style={{ width: 1, height: 22, background: "#d6d3d1" }} aria-hidden="true"></div>
+              <span className="font-serif font-bold lowercase" style={{ fontSize: "clamp(16px, 2vw, 22px)", color: "var(--ink)" }}>
+                We all need <span style={{ color: "var(--maple)" }}>community.</span>
+              </span>
             </div>
-            <div className="flex items-center gap-3 flex-wrap justify-center" aria-hidden="true">
+            <div className="flex items-center gap-3 flex-wrap justify-center sm:justify-end" aria-hidden="true">
               {["Connecting people", "Building trust", "Promoting well-being", "Strengthening communities"].map((label, i) => (
                 <React.Fragment key={i}>
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-stone-400">{label}</span>
-                  {i < 3 && <span className="opacity-30"><MapleLeaf size={12} color="var(--maple)"/></span>}
+                  <span style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "#a8a29e" }}>{label}</span>
+                  {i < 3 && <span style={{ opacity: 0.3, display: "flex" }}><MapleLeaf size={11} color="var(--maple)"/></span>}
                 </React.Fragment>
               ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Purpose / mission strip */}
-      <div className="border-t border-stone-200" style={{ background: "var(--warm-white)" }}>
-        <div className="max-w-7xl mx-auto px-6 py-12 reveal">
-          <div className="grid md:grid-cols-[1fr_auto] gap-8 items-center">
-            <div>
-              <span className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: "var(--maple)" }}>Our Purpose</span>
-              <p className="mt-4 text-lg text-stone-700 leading-relaxed font-medium max-w-3xl">
-                If community were a pill, every doctor would prescribe it — and every insurance company would reimburse it. <strong style={{ color: "var(--ink)" }}>Maple is a nonprofit Community Care Hub led by two doctors on a mission to make that a reality.</strong>
-              </p>
-              <p className="mt-3 text-[14px] text-stone-500 leading-relaxed max-w-3xl">
-                Our goal is that 70% of every dollar goes to community programs and community-based organizations and agencies who primarily support underserved populations.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <a href="https://youtu.be/2tBJ9Oknezg" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-stone-300 bg-white text-[13px] font-semibold lift" style={{ color: "var(--maple-deep)" }}>DHCS <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
-              <a href="https://www.chcf.org/wp-content/uploads/2024/10/ExploringEmergingMediCalCommunityCareHubs2024.pdf" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-stone-300 bg-white text-[13px] font-semibold lift" style={{ color: "var(--maple-deep)" }}>CHCF <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
-              <a href="https://aspe.hhs.gov/reports/community-care-hubs" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-stone-300 bg-white text-[13px] font-semibold lift" style={{ color: "var(--maple-deep)" }}>HHS <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
             </div>
           </div>
         </div>
@@ -719,7 +714,7 @@ function TheWork() {
   ];
 
   return (
-    <section id="work" className="py-20 px-6 relative" style={{ background: "var(--paper)" }}>
+    <section id="work" className="py-20 px-6 relative" style={{ background: "var(--warm-white)" }}>
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}
@@ -767,30 +762,30 @@ function TheWork() {
           </div>
 
           {/* Track 2: We fund others */}
-          <div className="reveal rounded-3xl p-8 flex flex-col gap-6" style={{ background: "linear-gradient(160deg, var(--ink) 0%, #3D1A0C 100%)", color: "#fff" }}>
+          <div className="reveal rounded-3xl border p-8 flex flex-col gap-6" style={{ background: "var(--cream)", borderColor: "rgba(168,52,26,0.15)" }}>
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] mb-4" style={{ background: "rgba(244,201,159,0.15)", color: "var(--amber-soft)" }}>
-                <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--amber-soft)" }}></span>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] mb-4" style={{ background: "rgba(168,52,26,0.09)", color: "var(--maple-deep)" }}>
+                <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--maple)" }}></span>
                 We fund
               </div>
-              <h3 className="font-serif font-bold lowercase leading-tight" style={{ fontSize: "clamp(22px, 2.5vw, 30px)" }}>
-                Others building <span className="italic" style={{ color: "var(--amber-soft)" }}>healthy communities.</span>
+              <h3 className="font-serif font-bold lowercase leading-tight" style={{ color: "var(--ink)", fontSize: "clamp(22px, 2.5vw, 30px)" }}>
+                Others building <span className="italic" style={{ color: "var(--maple)" }}>healthy communities.</span>
               </h3>
-              <p className="mt-4 text-stone-300 text-[15px] leading-relaxed">
+              <p className="mt-4 text-[15px] leading-relaxed" style={{ color: "#57534e" }}>
                 We don't build community from scratch — we back the organizations already holding their neighborhoods together. Our goal is that 70% of every dollar flows to community programs and the people doing the work.
               </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-2.5">
+            <div className="grid grid-cols-2 gap-2">
               {fundPartners.map((p, i) => (
-                <div key={i} className="rounded-xl px-3.5 py-3 flex items-center gap-2.5" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
+                <div key={i} className="rounded-xl px-3.5 py-3 flex items-center gap-2.5 bg-white/70" style={{ border: "1px solid rgba(43,24,16,0.09)" }}>
                   <span className="w-2 h-2 rounded-full shrink-0" style={{ background: p.c }}></span>
-                  <span className="text-[13px] font-medium text-stone-300">{p.t}</span>
+                  <span className="text-[13px] font-medium" style={{ color: "var(--ink)" }}>{p.t}</span>
                 </div>
               ))}
             </div>
 
-            <a href="https://carehub.org" target="_blank" rel="noopener" className="inline-flex items-center gap-2 font-semibold text-[13px] self-start px-5 py-2.5 rounded-full border mt-auto" style={{ color: "var(--amber-soft)", borderColor: "rgba(244,201,159,0.3)" }}>
+            <a href="https://carehub.org" target="_blank" rel="noopener" className="inline-flex items-center gap-2 font-semibold text-[13px] self-start px-5 py-2.5 rounded-full mt-auto" style={{ color: "var(--maple-deep)", background: "white", border: "1.5px solid rgba(168,52,26,0.25)" }}>
               Learn more at carehub.org
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
             </a>
